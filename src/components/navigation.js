@@ -1,12 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import Avatar from './avatar';
 
 const NavSection = () => (
-  <nav>
-    <Link to="/">Home</Link>
-    <Link to="/favorities">Favorities</Link>
-    <Link to="/account-settings">Account</Link>
-  </nav>
+  <header>
+    <nav>
+      <NavLink to="/" activeClassName="activeTab" exact>Home</NavLink>
+      <NavLink to="/favorities" activeClassName="activeTab">Favorities</NavLink>
+      <NavLink to="/account-settings" activeClassName="activeTab">Account</NavLink>
+    </nav>
+    <Avatar />
+  </header>
 );
 
 export default NavSection;
