@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-let Profile = ({ user }) => {
+let About = ({ user }) => {
   return (
     <p>
       Profile page! Heelo :) {user}
@@ -15,6 +15,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-Profile = connect(mapStateToProps, null)(Profile);
+About = connect(mapStateToProps, null)(About);
 
-export default Profile;
+export default About;

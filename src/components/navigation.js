@@ -1,16 +1,17 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Avatar from './avatar';
+import { HeaderContainer } from '../styled-components/main';
 
 const NavSection = () => (
-  <header>
+  <HeaderContainer>
     <nav>
       <NavLink to="/" activeClassName="activeTab" exact>Home</NavLink>
       <NavLink to="/favorities" activeClassName="activeTab">Favorities</NavLink>
-      <NavLink to="/account-settings" activeClassName="activeTab">Account</NavLink>
+      <NavLink to="/about" activeClassName="activeTab">About</NavLink>
     </nav>
     <Avatar />
-  </header>
+  </HeaderContainer>
 );
 
 export default NavSection;
