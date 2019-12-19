@@ -1,7 +1,12 @@
 import React from 'react';
+import TopRated from './top-rated';
+import Listings from './listings';
 
 const Home = () => (
-  <p>Home Page! welcome :=)</p>
+  <div>
+    <TopRated />
+    <Listings />
+  </div>
 );
 
 export default Home;

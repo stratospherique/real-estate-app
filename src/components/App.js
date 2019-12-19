@@ -14,6 +14,7 @@ import NotFound from './notfound';
 import NavSecion from './navigation';
 import Login from './login';
 import SignUp from './signup';
+import Article from './article-view';
 
 const App = () => (
   <Router>
@@ -26,6 +27,7 @@ const App = () => (
         <Route path="/" exact component={Home} />
         <Route path="/favorities" exact component={Home} />
         <Route path="/account-settings" exact component={Profile} />
+        <Route path="/show/:id" exact component={Article} />
         <Route path="*" component={NotFound} />
       </Switch>
     </div>
