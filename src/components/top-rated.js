@@ -1,13 +1,32 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
 import Items from './list-item';
-import { Listings } from '../styled-components/main';
+import { TheListings } from '../styled-components/main';
 
-const TopRated = () => (
-  <Listings>
-    <Items />
-  </Listings>
-);
+class TopRated extends React.Component {
+
+  state = {
+    trending: []
+  }
+
+  UNSAFE_componentWillMount() {
+    axios.get('http://localhost:3001/articles/trending')
+      .then((response) => {
+        this.setState({
+          trending: response.data.trending
+        })
+      })
+  }
+
+  render() {
+    const { trending } = this.state;
+    return (
+      <TheListings>
+        <Items items={trending} />
+      </TheListings>
+    );
+  };
+}
 
 
 export default TopRated;

@@ -11,7 +11,7 @@ let About = ({ user }) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.currentUser,
+    user: state.currentUser.user,
   }
 }
 
