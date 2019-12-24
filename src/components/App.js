@@ -3,10 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
-  Link,
-  useRouteMatch,
-  useParams
 } from "react-router-dom";
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -22,25 +18,19 @@ import AddForm from './add-item';
 import Favorites from './favorites';
 import { getItems, getItemsFail } from '../actions/index';
 
-
-
 class App extends React.Component {
 
-  componentDidMount() {
+  UNSAFE_componentDidMount() {
     this.props.loginStatus();
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getItems();
   }
 
   render() {
-    const { current_user } = this.props;
     return (
       <Router>
-        {/* <Route render={props => (
-          current_user.logged_in
-            ? ( */}
         <Container>
           <NavSecion />
           <MainSection>
@@ -56,16 +46,6 @@ class App extends React.Component {
             </Switch>
           </MainSection>
         </Container>
-        {/* ) : (
-              <div>
-                <Redirect to={{ pathname: '/login' }} />
-                <Switch>
-                  <Route path="/sign-up" exact component={SignUp} />
-                  <Route path="/login" exact component={Login} />
-                </Switch>
-              </div>
-            )
-        )} /> */}
       </Router>
     )
   }
@@ -123,7 +103,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 })
 
-
-App = connect(mapStateToProps, mapDispatchToProps)(App);
-
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

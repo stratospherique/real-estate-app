@@ -34,16 +34,19 @@ class Item extends React.Component {
   }
 
   render() {
-    const { index, imgLink, altText, isAdmin, likedItems } = this.props;
+    const { index, imgLink, altText, price, description, isAdmin, isLogged, likedItems } = this.props;
     return (
       <ArticlePreview>
         <Link to={{ pathname: `/show/${index}` }} >
           <img src={imgLink} alt={altText} className="preview" />
-          <span>8745 $</span>
-          <span>short description</span>
+          <span>{price} $</span>
+          <span>{description}</span>
         </Link>
         {isAdmin ? <span onClick={() => this.handleRemove(index)} className="del-button">✗</span> : null}
-        {likedItems.includes(index) ? <button>Liked</button> : <button onClick={this.handleLike}>Like</button>}
+        {isLogged ? (
+          likedItems.includes(index) ? <button>Liked</button> : <button onClick={this.handleLike}>Like</button>
+        ) : null}
+
       </ArticlePreview>
     )
   }
@@ -52,6 +55,7 @@ class Item extends React.Component {
 
 const mapStateToProps = (state) => ({
   isAdmin: state.currentUser.user.admin,
+  isLogged: state.currentUser.logged_in,
   likedItems: state.likedItems,
   user_id: state.currentUser.user.id
 })

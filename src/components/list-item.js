@@ -8,7 +8,7 @@ const Items = ({ items }) => {
       {
         (items[0] && items.map((item) => (
           <li key={item.id}>
-            <Item index={item.id} imgLink={item.preview[0]} altText={item.buildingType} />
+            <Item index={item.id} imgLink={item.preview[0]} altText={item.buildingType} price={item.price} description={item.description} />
           </li>
         ))) || <li>No items collected</li>
       }

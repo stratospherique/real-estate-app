@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 class AddForm extends React.Component {
 
   componentWillMount() {
-    return this.props.isAdmin ? null : this.redirect();
+    return this.props.isAdmin ? null : this.unRedirect();
   }
 
   state = {
     errors: [],
   }
 
-  redirect = () => {
+  unRedirect = () => {
     this.props.history.push('/404')
   }
 
