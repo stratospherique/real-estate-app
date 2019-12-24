@@ -1,20 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-let About = ({ user }) => {
+const About = () => {
   return (
     <p>
-      Profile page! Heelo :) {user}
+      About Page :)
     </p>
   )
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.currentUser.user,
-  }
-}
-
-About = connect(mapStateToProps, null)(About);
 
 export default About;

@@ -1,16 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { ArticlePreview } from '../styled-components/main';
 import axios from 'axios';
+import { getItems, getItemsFail } from '../actions/index';
 
 class Item extends React.Component {
 
   handleRemove = (index) => {
-    console.log(this.props)
     if (!this.props.history) return
     axios.delete(`http://localhost:3001/articles/${index}`)
       .then((response) => {
-        this.redirect();
+        this.props.getItems();
       })
       .catch((errors) => {
         alert(errors);
@@ -18,11 +19,22 @@ class Item extends React.Component {
   }
 
   redirect = () => {
-    this.props.history.push('/');
+    this.props.history.push('/favorities');
+  }
+
+  handleLike = () => {
+    const { user_id, index: article_id, addLiked } = this.props
+    axios.post('http://localhost:3001/favorites', { favorite: { user_id, article_id } })
+      .then((response) => {
+        addLiked(response.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
   }
 
   render() {
-    const { index, imgLink, altText, history } = this.props;
+    const { index, imgLink, altText, isAdmin, likedItems } = this.props;
     return (
       <ArticlePreview>
         <Link to={{ pathname: `/show/${index}` }} >
@@ -30,20 +42,36 @@ class Item extends React.Component {
           <span>8745 $</span>
           <span>short description</span>
         </Link>
-        <span onClick={() => this.handleRemove(index)} className="del-button">✗</span>
+        {isAdmin ? <span onClick={() => this.handleRemove(index)} className="del-button">✗</span> : null}
+        {likedItems.includes(index) ? <button>Liked</button> : <button onClick={this.handleLike}>Like</button>}
       </ArticlePreview>
     )
   }
 }
 
 
-const mapDispatchToProps = (dispatch) => ({
-  getItems: (data) => {
-    dispatch({
-      type: 'GET_ITEMS',
-      items: data,
-    })
-  }
+const mapStateToProps = (state) => ({
+  isAdmin: state.currentUser.user.admin,
+  likedItems: state.likedItems,
+  user_id: state.currentUser.user.id
 })
 
-export default Item;
+const mapDispatchToProps = (dispatch) => ({
+  addLiked: (data) => {
+    dispatch({
+      type: 'ADD_LIKED',
+      id: data,
+    })
+  },
+  getItems: () => {
+    axios.get('http://localhost:3001/articles')
+      .then((response) => {
+        dispatch(getItems(response.data.articles));
+      })
+      .catch(() => {
+        dispatch(getItemsFail());
+      });
+  },
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Item));

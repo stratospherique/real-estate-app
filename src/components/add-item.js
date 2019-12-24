@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 class AddForm extends React.Component {
 
   componentWillMount() {
-    return this.props.logged_in ? null : this.redirect();
+    return this.props.isAdmin ? null : this.redirect();
   }
 
   state = {
@@ -91,7 +91,7 @@ class AddForm extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    logged_in: state.currentUser.logged_in
+    isAdmin: state.currentUser.user.admin
   }
 }
 

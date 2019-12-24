@@ -1,18 +1,24 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Avatar from './avatar';
 import { HeaderContainer } from '../styled-components/main';
 
-const NavSection = () => (
+const NavSection = ({ isAdmin, isLogged }) => (
   <HeaderContainer>
     <nav>
-      <NavLink to="/" activeClassName="activeTab" >Home</NavLink>
-      <NavLink to="/favorities" activeClassName="activeTab">Favorities</NavLink>
+      <NavLink to="/" exact activeClassName="activeTab" >Home</NavLink>
+      {isLogged ? <NavLink to="/favorities" activeClassName="activeTab">Favorities</NavLink> : null}
       <NavLink to="/about" activeClassName="activeTab">About</NavLink>
-      <NavLink to="/add-real" activeClassName="activeTab">add a real estate</NavLink>
+      {isAdmin ? <NavLink to="/add-real" activeClassName="activeTab">add a real estate</NavLink> : null}
     </nav>
     <Avatar />
   </HeaderContainer>
 );
 
-export default NavSection;
+const mapStateToProps = (state) => ({
+  isAdmin: state.currentUser.user.admin,
+  isLogged: state.currentUser.logged_in,
+});
+
+export default connect(mapStateToProps, null)(NavSection);

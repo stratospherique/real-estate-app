@@ -1,9 +1,31 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const Article = () => (
-  <article>
-    article to display
-  </article>
-);
+class Article extends React.Component {
 
-export default Article;
+  render() {
+    const { theItem } = this.props;
+    return (
+      <>
+        {
+          theItem ? (
+            <article>
+              <img src={theItem.preview[0]} />
+            </article >
+          ) : (
+              <article>Oops! Somethings wrong</article>
+            )
+        }
+      </>
+    );
+  }
+}
+
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    theItem: state.aptList.find((e) => e.id == ownProps.match.params.id),
+  }
+}
+
+export default connect(mapStateToProps, null)(Article);

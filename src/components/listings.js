@@ -8,9 +8,9 @@ import Items from './list-item';
 class Listings extends React.Component {
 
 
-  UNSAFE_componentWillMount() {
+  /* UNSAFE_componentWillMount() {
     this.props.getItems();
-  }
+  } */
 
   render() {
     const { items } = this.props;
@@ -22,10 +22,14 @@ class Listings extends React.Component {
   }
 }
 const mapStateToProps = (state) => ({
-  items: state.aptList,
+  items: getNotTrending(state.aptList, state.trendingItems),
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const getNotTrending = (apts, theArray) => {
+  return apts.filter((e) => !theArray.includes(e.id));
+}
+
+/* const mapDispatchToProps = (dispatch) => ({
   getItems: () => {
     axios.get('http://localhost:3001/articles')
       .then((response) => {
@@ -35,6 +39,6 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(getItemsFail());
       });
   },
-});
+}) */
 
-export default connect(mapStateToProps, mapDispatchToProps)(Listings);
+export default connect(mapStateToProps, null)(Listings);
