@@ -42,8 +42,8 @@ class Avatar extends React.Component {
       <UserName cls={this.state.direction === 'up' ? 'up-content' : 'down-content'} />
     ) : <UserName cls="hidden" />
     return (
-      <AvatarContainer onPointerLeave={this.handleResume} onPointerEnter={this.handleDrop} >
-        <img src="https://www.w3schools.com/howto/img_avatar2.png" className="avatar-pic" />
+      <AvatarContainer onPointerLeave={this.handleResume} onPointerEnter={this.handleDrop}>
+        <img src="https://www.w3schools.com/howto/img_avatar2.png" className="avatar-pic" alt="Avatar" />
         {dropMenu}
       </AvatarContainer>
     );

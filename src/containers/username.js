@@ -4,7 +4,6 @@ import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 class UserName extends Component {
-
   handleLogout = () => {
     axios.delete('https://final-app-api.herokuapp.com/logout', { withCredentials: true })
       .then(() => {
@@ -31,8 +30,7 @@ class UserName extends Component {
               <span>Visitor</span>
               <Link to="/login">login</Link>
             </div>
-          )
-        }
+          )}
       </>
     )
   }
@@ -56,4 +54,3 @@ const mapDispatchToProps = (dispatch) => {
 
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserName));
-

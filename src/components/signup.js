@@ -5,7 +5,6 @@ import { ArtForm, FormButton } from '../styled-components/main';
 
 
 class SignUp extends React.Component {
-
   state = {
     errors: []
   }
@@ -70,7 +69,7 @@ class SignUp extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   signUpStart: () => {
-    console.log("hey");
+    console.log('hey');
   },
   signUpSuccess: (user) => {
     dispatch({
@@ -80,7 +79,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 })
 
-SignUp = connect(null, mapDispatchToProps)(SignUp);
-
-
-export default SignUp;
+export default connect(null, mapDispatchToProps)(SignUp);

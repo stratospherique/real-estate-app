@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ArticlePreview, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn } from '../styled-components/main';
 import axios from 'axios';
+import { ArticlePreview, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn } from '../styled-components/main';
 import { getItems, getItemsFail } from '../actions/index';
 
 class Item extends React.Component {
-
   handleRemove = (index) => {
     if (!this.props.history) return
     axios.delete(`https://final-app-api.herokuapp.com/articles/${index}`)
@@ -37,7 +36,7 @@ class Item extends React.Component {
     const { index, imgLink, altText, price, description, isAdmin, isLogged, likedItems } = this.props;
     return (
       <ArticlePreview>
-        <Link to={{ pathname: `/show/${index}` }} >
+        <Link to={{ pathname: `/show/${index}` }}>
           <PreviewIMG src={imgLink} alt={altText} className="preview" />
           <ArtPrice className="art-price"><span>Price:</span><span>{price} $</span></ArtPrice>
           <ArtDesc className="art-desc"><span>Description:</span><span>{description}</span></ArtDesc>

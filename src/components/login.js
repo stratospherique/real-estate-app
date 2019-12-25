@@ -5,7 +5,6 @@ import axios from 'axios';
 import { ArtForm, FormButton } from '../styled-components/main';
 
 class Login extends React.Component {
-
   state = {
     errors: {}
   }
@@ -45,7 +44,7 @@ class Login extends React.Component {
       </ul>
     ) : null;
     return (
-      <ArtForm onSubmit={this.handleSubmit} >
+      <ArtForm onSubmit={this.handleSubmit}>
         <span>Login</span>
         {errorsDisplay}
         <div>

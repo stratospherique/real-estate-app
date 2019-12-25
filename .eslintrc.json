@@ -43,6 +43,21 @@
     "jsx-a11y/accessible-emoji": "off",
     "arrow-body-style": "off",
     "eqeqeq": "off",
-    "max-len": "off"
+    "max-len": "off",
+    "react/state-in-constructor": "off",
+    "comma-dangle": "off",
+    "no-unused-vars": "off",
+    "react/jsx-wrap-multilines": "off",
+    "no-return-assign": "off",
+    "operator-linebreak": "off",
+    "react/no-unused-state": "off",
+    "object-curly-newline": "off",
+    "no-alert": "off",
+    "no-console": "off",
+    "no-nested-ternary": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "react/jsx-indent": "off",
+    "indent": "off"
   }
 }

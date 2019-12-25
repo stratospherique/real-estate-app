@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { ArtForm, FormButton } from '../styled-components/main';
 
 class AddForm extends React.Component {
-
   state = {
     errors: [],
   }
@@ -12,8 +11,6 @@ class AddForm extends React.Component {
   componentDidMount() {
     return this.props.isAdmin ? null : this.unRedirect();
   }
-
-
 
   unRedirect = () => {
     this.props.history.push('/404')
