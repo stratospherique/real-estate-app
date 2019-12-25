@@ -21,6 +21,7 @@ import { getItems, getItemsFail } from '../actions/index';
 class App extends React.Component {
 
   UNSAFE_componentDidMount() {
+    this.props.loginStatus();
   }
 
   UNSAFE_componentWillMount() {
@@ -58,20 +59,20 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loginStatus: () => {
-    axios.get('http://localhost:3001/logged_in', { withCredentials: true }).then((response) => {
+    axios.get('https://final-app-api.herokuapp.com/logged_in', { withCredentials: true }).then((response) => {
       if (response.data.logged_in) {
         dispatch({
           type: 'LOGGED_IN',
           user: response.data.user,
         })
-        axios.get(`http://localhost:3001/user/${response.data.user.id}/favorites`, { withCredentials: true })
+        axios.get(`https://final-app-api.herokuapp.com/user/${response.data.user.id}/favorites`, { withCredentials: true })
           .then((response) => {
             dispatch({
               type: 'GET_LIKED',
               liked: response.data,
             })
           })
-        axios.get('http://localhost:3001/articles/trending')
+        axios.get('https://final-app-api.herokuapp.com/articles/trending')
           .then((response) => {
             dispatch({
               type: 'GET_TRENDING',
@@ -79,7 +80,6 @@ const mapDispatchToProps = (dispatch) => ({
             })
           })
       } else {
-        console.log('logged_out')
         dispatch({
           type: 'LOGGED_OUT',
         })
@@ -93,7 +93,7 @@ const mapDispatchToProps = (dispatch) => ({
     })
   },
   getItems: () => {
-    axios.get('http://localhost:3001/articles')
+    axios.get('https://final-app-api.herokuapp.com/articles')
       .then((response) => {
         dispatch(getItems(response.data.articles));
       })

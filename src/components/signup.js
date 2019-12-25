@@ -18,10 +18,9 @@ class SignUp extends React.Component {
       password: this.pwd.value,
       password_confirmation: this.pwdC.value,
     }
-    axios.post('http://localhost:3001/users', { user: newUser }, { withCredentials: true })
+    axios.post('https://final-app-api.herokuapp.com/users', { user: newUser }, { withCredentials: true })
       .then((response) => {
         if (response.data.user) {
-          console.log(response.data.user)
           this.props.signUpSuccess(response.data.user)
           this.redirect();
         } else {

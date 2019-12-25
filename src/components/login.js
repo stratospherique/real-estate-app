@@ -16,7 +16,7 @@ class Login extends React.Component {
       username: this.username.value,
       password: this.password.value,
     }
-    axios.post('http://localhost:3001/login', { user: newUser }, { withCredentials: true })
+    axios.post('https://final-app-api.herokuapp.com/login', { user: newUser }, { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in) {
           this.props.loginSuccess(response.data.user)

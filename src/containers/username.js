@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 class UserName extends Component {
 
   handleLogout = () => {
-    axios.delete('http://localhost:3001/logout', { withCredentials: true })
+    axios.delete('https://final-app-api.herokuapp.com/logout', { withCredentials: true })
       .then(() => {
         this.props.loggoutStart();
         this.redirect();
@@ -54,7 +54,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-UserName = connect(mapStateToProps, mapDispatchToProps)(UserName);
 
-export default UserName;
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserName));
 

@@ -5,7 +5,7 @@ import { ArtForm, FormButton } from '../styled-components/main';
 
 class AddForm extends React.Component {
 
-  componentWillMount() {
+  componentDidMount() {
     return this.props.isAdmin ? null : this.unRedirect();
   }
 
@@ -30,10 +30,11 @@ class AddForm extends React.Component {
       rating: this.rat.value,
     }
 
-    axios.post('http://localhost:3001/articles/add', { article: newArt })
+    axios.post('https://final-app-api.herokuapp.com/articles/add', { article: newArt })
       .then((response) => {
         if (response.data.article) {
-          this.redirect(response.data.article.id)
+          this.props.addItem(response.data.article);
+          this.redirect(response.data.article.id);
         } else {
           this.setState({
             errors: response.data.message
@@ -48,7 +49,7 @@ class AddForm extends React.Component {
   }
 
   redirect(id) {
-    this.props.history.push(`/show/${id}`)
+    this.props.history.push(`/show/${id}`);
   }
 
   render() {
@@ -97,4 +98,13 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(AddForm);
+const mapDispatchToProps = (dispatch) => ({
+  addItem: (article) => {
+    dispatch({
+      type: 'ADD_ITEM',
+      article
+    })
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddForm);

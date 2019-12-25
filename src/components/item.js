@@ -9,7 +9,7 @@ class Item extends React.Component {
 
   handleRemove = (index) => {
     if (!this.props.history) return
-    axios.delete(`http://localhost:3001/articles/${index}`)
+    axios.delete(`https://final-app-api.herokuapp.com/articles/${index}`)
       .then((response) => {
         this.props.getItems();
       })
@@ -24,7 +24,7 @@ class Item extends React.Component {
 
   handleLike = () => {
     const { user_id, index: article_id, addLiked } = this.props
-    axios.post('http://localhost:3001/favorites', { favorite: { user_id, article_id } })
+    axios.post('https://final-app-api.herokuapp.com/favorites', { favorite: { user_id, article_id } })
       .then((response) => {
         addLiked(response.data);
       })
@@ -68,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
     })
   },
   getItems: () => {
-    axios.get('http://localhost:3001/articles')
+    axios.get('https://final-app-api.herokuapp.com/articles')
       .then((response) => {
         dispatch(getItems(response.data.articles));
       })

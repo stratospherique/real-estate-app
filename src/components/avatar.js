@@ -26,9 +26,15 @@ class Avatar extends React.Component {
   }
 
   handleDrop = () => {
-    this.setState((state) => ({
-      open: !state.open,
-    }))
+    this.setState({
+      open: true,
+    })
+  }
+
+  handleResume = () => {
+    this.setState({
+      open: false,
+    })
   }
 
   render() {
@@ -36,8 +42,8 @@ class Avatar extends React.Component {
       <UserName cls={this.state.direction === 'up' ? 'up-content' : 'down-content'} />
     ) : <UserName cls="hidden" />
     return (
-      <AvatarContainer>
-        <img src="https://www.w3schools.com/howto/img_avatar2.png" className="avatar-pic" onClick={this.handleDrop} />
+      <AvatarContainer onPointerLeave={this.handleResume} onPointerEnter={this.handleDrop} >
+        <img src="https://www.w3schools.com/howto/img_avatar2.png" className="avatar-pic" />
         {dropMenu}
       </AvatarContainer>
     );
