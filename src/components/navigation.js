@@ -7,7 +7,7 @@ import { HeaderContainer } from '../styled-components/main';
 const NavSection = ({ isAdmin, isLogged }) => (
   <HeaderContainer>
     <nav className="nav-left">
-      <NavLink to="/" exact activeClassName="activeTab" >Home</NavLink>
+      <NavLink to="/" exact activeClassName="activeTab">Home</NavLink>
       {isLogged ? <NavLink to="/favorities" activeClassName="activeTab">Favorities</NavLink> : null}
     </nav>
     <Avatar />

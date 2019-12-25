@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-} from "react-router-dom";
+} from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import Home from './Home';
@@ -19,7 +19,6 @@ import Favorites from './favorites';
 import { getItems, getItemsFail } from '../actions/index';
 
 class App extends React.Component {
-
   UNSAFE_componentDidMount() {
     this.props.loginStatus();
   }
@@ -76,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
           .then((response) => {
             dispatch({
               type: 'GET_TRENDING',
-              ids: response.data.trending
+              ids: response.data.trending,
             })
           })
       } else {
@@ -87,8 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
           type: 'CLEAR_LIKED',
         })
       }
-    }
-    )
+    })
   },
   getItems: () => {
     axios.get('https://final-app-api.herokuapp.com/articles')

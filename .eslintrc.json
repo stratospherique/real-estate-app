@@ -4,6 +4,7 @@
     "es6": true,
     "jest": true
   },
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -35,5 +36,13 @@
     "react/destructuring-assignment": "off",
     "react/prop-types": "off",
     "semi": "off",
+    "prefer-const": "off",
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "jsx-a11y/accessible-emoji": "off",
+    "arrow-body-style": "off",
+    "eqeqeq": "off",
+    "max-len": "off"
   }
 }

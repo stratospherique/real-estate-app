@@ -39,8 +39,6 @@ const TheListings = styled.ul`
   box-shadow: 1px 1px 2px 2px #a7a9ac;
 `;
 
-
-
 const ArticlePreview = styled.div`
   display: flex;
   border: 1px solid;

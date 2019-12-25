@@ -3,20 +3,15 @@ import { connect } from 'react-redux';
 import Items from './list-item';
 import { TheListings } from '../styled-components/main';
 
-class TopRated extends React.Component {
+const TopRated = ({ trending }) => (
+  <TheListings>
+    <Items items={trending} />
+  </TheListings>
+)
 
-  render() {
-    const { trending } = this.props;
-    return (
-      <TheListings>
-        <Items items={trending} />
-      </TheListings>
-    );
-  };
-}
 
 const getTrending = (apts, theArray) => {
-  return apts.filter((e) => theArray.includes(e.id));
+  return apts.filter((e) => theArray.includes(e.id))
 }
 
 const mapStateToProps = (state) => ({
