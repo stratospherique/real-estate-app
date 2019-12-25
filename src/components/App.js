@@ -88,9 +88,7 @@ const mapDispatchToProps = (dispatch) => ({
         })
       }
     }
-    ).catch((err) => {
-      console.error('api errors', err);
-    })
+    )
   },
   getItems: () => {
     axios.get('https://final-app-api.herokuapp.com/articles')

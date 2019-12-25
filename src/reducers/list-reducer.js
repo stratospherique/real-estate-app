@@ -5,8 +5,8 @@ const listReducer = (state = [], action) => {
     case 'ADD_ITEM':
       return [
         ...state,
-        action.article
-      ]
+        action.article,
+      ];
     default:
       return state;
   }

@@ -5,13 +5,15 @@ import { ArtForm, FormButton } from '../styled-components/main';
 
 class AddForm extends React.Component {
 
+  state = {
+    errors: [],
+  }
+
   componentDidMount() {
     return this.props.isAdmin ? null : this.unRedirect();
   }
 
-  state = {
-    errors: [],
-  }
+
 
   unRedirect = () => {
     this.props.history.push('/404')

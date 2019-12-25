@@ -29,6 +29,11 @@
       }
     ],
     "import/no-unresolved": "off",
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "camelcase": "off",
+    "react/sort-comp": "off",
+    "react/destructuring-assignment": "off",
+    "react/prop-types": "off",
+    "semi": "off",
   }
 }
