@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { ArtForm, FormButton } from '../styled-components/main';
+
 
 class SignUp extends React.Component {
 
@@ -47,7 +49,7 @@ class SignUp extends React.Component {
       </ul>
     ) : null;
     return (
-      <form onSubmit={this.handleSubmit}>
+      <ArtForm onSubmit={this.handleSubmit}>
         {errorsDisplay}
         <div>
           <input type="text" placeholder="username" ref={(input) => this.username = input} />
@@ -61,8 +63,8 @@ class SignUp extends React.Component {
         <div>
           <input type="password" placeholder="Password confirmation" ref={(input) => this.pwdC = input} />
         </div>
-        <button type="submit">Sign in</button>
-      </form>
+        <FormButton type="submit">Sign UP</FormButton>
+      </ArtForm>
     );
   }
 }

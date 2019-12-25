@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { ArtForm, FormButton } from '../styled-components/main';
 
 class AddForm extends React.Component {
 
@@ -52,12 +53,13 @@ class AddForm extends React.Component {
 
   render() {
     const errorsDisplay = this.state.errors.length > 0 ?
-      <ul>
+      <ul><span>Unable To add due to the following errors:</span>
         {this.state.errors.map((item) => <li key={item}>{item}</li>)}
       </ul>
       : null;
     return (
-      <form onSubmit={this.handleSubmit}>
+      <ArtForm onSubmit={this.handleSubmit}>
+        <span>Add a real Estate</span>
         {errorsDisplay}
         <div>
           <input type="text" placeholder="description" ref={(input) => this.desc = input} />
@@ -66,7 +68,7 @@ class AddForm extends React.Component {
           <input type="number" placeholder="price in $" ref={(input) => this.price = input} />
         </div>
         <div>
-          <input type="text" placeholder="image url" ref={(input) => this.url = input} />
+          <input type="text" placeholder="Valid Real Image url" ref={(input) => this.url = input} />
         </div>
         <div>
           <input type="text" placeholder="Building type" ref={(input) => this.bType = input} />
@@ -81,10 +83,10 @@ class AddForm extends React.Component {
           <input type="number" placeholder="Footage" ref={(input) => this.foot = input} />
         </div>
         <div>
-          <input type="number" min="0" max="5" placeholder="image url" ref={(input) => this.rat = input} />
+          <input type="number" min="0" max="5" placeholder="Your Honest Rating" ref={(input) => this.rat = input} />
         </div>
-        <button type="submit">add real estate</button>
-      </form>
+        <FormButton type="submit">add real estate</FormButton>
+      </ArtForm>
     )
   }
 }

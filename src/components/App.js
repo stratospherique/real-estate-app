@@ -21,11 +21,11 @@ import { getItems, getItemsFail } from '../actions/index';
 class App extends React.Component {
 
   UNSAFE_componentDidMount() {
-    this.props.loginStatus();
   }
 
   UNSAFE_componentWillMount() {
     this.props.getItems();
+    this.props.loginStatus();
   }
 
   render() {

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { ArtForm, FormButton } from '../styled-components/main';
 
 class Login extends React.Component {
 
@@ -44,21 +45,20 @@ class Login extends React.Component {
       </ul>
     ) : null;
     return (
-      <form onSubmit={this.handleSubmit} >
+      <ArtForm onSubmit={this.handleSubmit} >
+        <span>Login</span>
         {errorsDisplay}
         <div>
-          <label htmlFor="username">User Name</label>
           <input type="text" id="username" ref={(input) => this.username = input} />
         </div>
         <div>
-          <label htmlFor="password">Password</label>
           <input type="password" id="password" ref={(input) => this.password = input} />
         </div>
         <div>
-          <button type="submit">Sign in</button>
+          <FormButton type="submit">Sign in</FormButton>
           <Link to="/sign-up">Sign Up</Link>
         </div>
-      </form>
+      </ArtForm>
     );
   }
 }

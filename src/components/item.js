@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ArticlePreview } from '../styled-components/main';
+import { ArticlePreview, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn } from '../styled-components/main';
 import axios from 'axios';
 import { getItems, getItemsFail } from '../actions/index';
 
@@ -38,13 +38,13 @@ class Item extends React.Component {
     return (
       <ArticlePreview>
         <Link to={{ pathname: `/show/${index}` }} >
-          <img src={imgLink} alt={altText} className="preview" />
-          <span>{price} $</span>
-          <span>{description}</span>
+          <PreviewIMG src={imgLink} alt={altText} className="preview" />
+          <ArtPrice className="art-price"><span>Price:</span><span>{price} $</span></ArtPrice>
+          <ArtDesc className="art-desc"><span>Description:</span><span>{description}</span></ArtDesc>
         </Link>
-        {isAdmin ? <span onClick={() => this.handleRemove(index)} className="del-button">✗</span> : null}
+        {isAdmin ? <DelBtn onClick={() => this.handleRemove(index)} className="del-button">✗</DelBtn> : null}
         {isLogged ? (
-          likedItems.includes(index) ? <button>Liked</button> : <button onClick={this.handleLike}>Like</button>
+          likedItems.includes(index) ? <FavBtn className="fav-btn">💜</FavBtn> : <FavBtn className="fav-btn" onClick={this.handleLike}>💚</FavBtn>
         ) : null}
 
       </ArticlePreview>

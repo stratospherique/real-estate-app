@@ -6,13 +6,15 @@ import { HeaderContainer } from '../styled-components/main';
 
 const NavSection = ({ isAdmin, isLogged }) => (
   <HeaderContainer>
-    <nav>
+    <nav className="nav-left">
       <NavLink to="/" exact activeClassName="activeTab" >Home</NavLink>
       {isLogged ? <NavLink to="/favorities" activeClassName="activeTab">Favorities</NavLink> : null}
-      <NavLink to="/about" activeClassName="activeTab">About</NavLink>
-      {isAdmin ? <NavLink to="/add-real" activeClassName="activeTab">add a real estate</NavLink> : null}
     </nav>
     <Avatar />
+    <nav className="nav-right" style={isAdmin ? null : { justifyContent: 'flex-start', marginLeft: '2rem' }}>
+      <NavLink to="/about" activeClassName="activeTab">About</NavLink>
+      {isAdmin ? <NavLink to="/add-real" activeClassName="activeTab">add appart</NavLink> : null}
+    </nav>
   </HeaderContainer>
 );
 

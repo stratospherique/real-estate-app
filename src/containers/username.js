@@ -9,21 +9,26 @@ class UserName extends Component {
     axios.delete('http://localhost:3001/logout', { withCredentials: true })
       .then(() => {
         this.props.loggoutStart();
+        this.redirect();
       })
   }
 
+  redirect = () => {
+    this.props.history.push('/');
+  }
+
   render() {
-    const { user } = this.props;
+    const { user, cls } = this.props;
     return (
       <>
         {user ? (
-          <div>
+          <div className={`drop-content ${cls}`}>
             <span>{user}</span>
-            <button onClick={this.handleLogout}>Logout</button>
+            <span onClick={this.handleLogout}>Logout</span>
           </div>
         ) : (
-            <div>
-              <span>Anonymous</span>
+            <div className={`drop-content ${cls}`}>
+              <span>Visitor</span>
               <Link to="/login">login</Link>
             </div>
           )
