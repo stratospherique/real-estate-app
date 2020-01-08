@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Items from './list-item';
+import Items from './List-item';
 import { TheListings } from '../styled-components/main';
 
 const TopRated = ({ trending }) => (

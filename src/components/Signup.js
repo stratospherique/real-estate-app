@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { ArtForm, FormButton } from '../styled-components/main';
+import DOMAIN from '../_helpers/api-source';
 
 
 class SignUp extends React.Component {
@@ -17,7 +18,7 @@ class SignUp extends React.Component {
       password: this.pwd.value,
       password_confirmation: this.pwdC.value,
     }
-    axios.post('https://final-app-api.herokuapp.com/users', { user: newUser }, { withCredentials: true })
+    axios.post(`${DOMAIN}/users`, { user: newUser }, { withCredentials: true })
       .then((response) => {
         if (response.data.user) {
           this.props.signUpSuccess(response.data.user)

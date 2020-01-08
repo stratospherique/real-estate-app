@@ -1,6 +1,6 @@
 import React from 'react';
-import TopRated from './top-rated';
-import Listings from './listings';
+import TopRated from '../components/Top-rated';
+import Listings from '../components/Listings';
 
 const Home = () => (
   <>

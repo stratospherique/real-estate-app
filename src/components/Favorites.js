@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { TheListings } from '../styled-components/main';
-import Items from './list-item';
+import Items from './List-item';
 
 
 const Favorites = ({ likedItems }) => (

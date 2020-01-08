@@ -6,26 +6,25 @@ import {
 } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import Home from './Home';
-import NotFound from './notfound';
-import NavSecion from './navigation';
-import Login from './login';
-import SignUp from './signup';
-import Article from './article-view';
+import Home from '../pages/home';
+import NotFound from '../pages/notfound';
+import NavSecion from './Navigation';
+import Login from './Login';
+import SignUp from './Signup';
+import Article from '../pages/article-view';
 import { Container, MainSection } from '../styled-components/main';
-import About from './about';
+import About from '../pages/about';
 import AddForm from './add-item';
-import Favorites from './favorites';
+import Favorites from './Favorites';
 import { getItems, getItemsFail } from '../actions/index';
+import DOMAIN from '../_helpers/api-source';
 
 class App extends React.Component {
-  UNSAFE_componentDidMount() {
-    this.props.loginStatus();
-  }
 
-  UNSAFE_componentWillMount() {
-    this.props.getItems();
-    this.props.loginStatus();
+  constructor(props) {
+    super(props);
+    props.getItems();
+    props.loginStatus();
   }
 
   render() {
@@ -36,7 +35,7 @@ class App extends React.Component {
           <MainSection>
             <Switch>
               <Route path="/" exact component={Home} />
-              <Route path="/favorities" exact component={Favorites} />
+              <Route path="/favorites" exact component={Favorites} />
               <Route path="/about" exact component={About} />
               <Route path="/show/:id" exact component={Article} />
               <Route path="/add-real" exact component={AddForm} />
@@ -58,24 +57,17 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loginStatus: () => {
-    axios.get('https://final-app-api.herokuapp.com/logged_in', { withCredentials: true }).then((response) => {
+    axios.get(`${DOMAIN}/logged_in`, { withCredentials: true }).then((response) => {
       if (response.data.logged_in) {
         dispatch({
           type: 'LOGGED_IN',
           user: response.data.user,
         })
-        axios.get(`https://final-app-api.herokuapp.com/user/${response.data.user.id}/favorites`, { withCredentials: true })
+        axios.get(`${DOMAIN}/user/${response.data.user.id}/favorites`, { withCredentials: true })
           .then((response) => {
             dispatch({
               type: 'GET_LIKED',
               liked: response.data,
-            })
-          })
-        axios.get('https://final-app-api.herokuapp.com/articles/trending')
-          .then((response) => {
-            dispatch({
-              type: 'GET_TRENDING',
-              ids: response.data.trending,
             })
           })
       } else {
@@ -86,10 +78,17 @@ const mapDispatchToProps = (dispatch) => ({
           type: 'CLEAR_LIKED',
         })
       }
+      axios.get(`${DOMAIN}/articles/trending`)
+        .then((response) => {
+          dispatch({
+            type: 'GET_TRENDING',
+            ids: response.data.trending,
+          })
+        })
     })
   },
   getItems: () => {
-    axios.get('https://final-app-api.herokuapp.com/articles')
+    axios.get(`${DOMAIN}/articles`)
       .then((response) => {
         dispatch(getItems(response.data.articles));
       })

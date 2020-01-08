@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { ArtForm, FormButton } from '../styled-components/main';
+import DOMAIN from '../_helpers/api-source';
 
 class AddForm extends React.Component {
   state = {
@@ -29,7 +30,7 @@ class AddForm extends React.Component {
       rating: this.rat.value,
     }
 
-    axios.post('https://final-app-api.herokuapp.com/articles/add', { article: newArt })
+    axios.post(`${DOMAIN}/articles`, { article: newArt })
       .then((response) => {
         if (response.data.article) {
           this.props.addItem(response.data.article);

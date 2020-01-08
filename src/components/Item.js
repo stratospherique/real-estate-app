@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { ArticlePreview, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn } from '../styled-components/main';
 import { getItems, getItemsFail } from '../actions/index';
+import DOMAIN from '../_helpers/api-source';
 
 class Item extends React.Component {
   handleRemove = (index) => {
     if (!this.props.history) return
-    axios.delete(`https://final-app-api.herokuapp.com/articles/${index}`)
+    axios.delete(`${DOMAIN}/articles/${index}`)
       .then((response) => {
         this.props.getItems();
       })
@@ -23,7 +24,7 @@ class Item extends React.Component {
 
   handleLike = () => {
     const { user_id, index: article_id, addLiked } = this.props
-    axios.post('https://final-app-api.herokuapp.com/favorites', { favorite: { user_id, article_id } })
+    axios.post(`${DOMAIN}/favorites`, { favorite: { user_id, article_id } })
       .then((response) => {
         addLiked(response.data);
       })
@@ -67,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
     })
   },
   getItems: () => {
-    axios.get('https://final-app-api.herokuapp.com/articles')
+    axios.get(`${DOMAIN}/articles`)
       .then((response) => {
         dispatch(getItems(response.data.articles));
       })

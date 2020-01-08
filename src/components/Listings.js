@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { TheListings } from '../styled-components/main';
-import Items from './list-item';
+import Items from './List-item';
 
 const Listings = ({ items }) => (
   <TheListings>

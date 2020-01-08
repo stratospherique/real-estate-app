@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
+import DOMAIN from '../_helpers/api-source';
 
 class UserName extends Component {
   handleLogout = () => {
-    axios.delete('https://final-app-api.herokuapp.com/logout', { withCredentials: true })
+    axios.delete(`${DOMAIN}/logout`, { withCredentials: true })
       .then(() => {
         this.props.loggoutStart();
         this.redirect();
@@ -47,7 +48,10 @@ const mapDispatchToProps = (dispatch) => {
     loggoutStart: () => {
       dispatch({
         type: 'LOGGED_OUT'
-      })
+      });
+      dispatch({
+        type: 'CLEAR_LIKED',
+      });
     }
   }
 }
