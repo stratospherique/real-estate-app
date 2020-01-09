@@ -44,7 +44,7 @@ class Item extends React.Component {
         </Link>
         {isAdmin ? <DelBtn onClick={() => this.handleRemove(index)} className="del-button">✗</DelBtn> : null}
         {isLogged ? (
-          likedItems.includes(index) ? <FavBtn className="fav-btn">💜</FavBtn> : <FavBtn className="fav-btn" onClick={this.handleLike}>💚</FavBtn>
+          likedItems.includes(index) ? <FavBtn>💗</FavBtn> : <FavBtn onClick={this.handleLike}>♡</FavBtn>
         ) : null}
 
       </ArticlePreview>

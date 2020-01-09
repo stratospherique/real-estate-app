@@ -24,6 +24,12 @@ const MainSection = styled.main`
   }
 `;
 
+const SectionHeading = styled.h1`
+  margin: 0;
+  margin-left: 2.2rem;
+  font-size: 1.5rem;
+`;
+
 const TheListings = styled.ul`
   padding: 1rem;
   margin: .5rem;
@@ -36,19 +42,18 @@ const TheListings = styled.ul`
   grid-gap: 1rem;
   background-color: white;
   border-radius: 1rem;
-  box-shadow: 1px 1px 2px 2px #a7a9ac;
 `;
 
 const ArticlePreview = styled.div`
   display: flex;
-  border: 1px solid;
+  border: 1px solid #CBCCCD;
   border-radius: 10px 10px 0px 0px;
   flex-direction: column;
   width: 100%;
   max-width: 250px;
   height: 9rem;
   position: relative;
-  background-color: rgb(230,255,200);
+  background-color: #fff;
 
   & > a {
     height: 100%;
@@ -78,7 +83,7 @@ const ArtPrice = styled.div`
     margin-right: .2rem;
   }
   & :nth-child(2) {
-    color: magenta;
+    color: #1B2333;
     font-size: .8rem;
   }
 `;
@@ -108,13 +113,12 @@ const DelBtn = styled.span`
   padding: .7rem;
   border-radius: 50%;
   transition: .5s all ease-in;
-  background-color: #17BEBB;
+  background-color: #a7a9ac;
   opacity: .5;
   cursor: pointer;
 
   &:hover {
-    color: black;
-    background-color: lightgray;
+    color: #D831B5;
     opacity: 1;
   }
 `;
@@ -124,18 +128,18 @@ const FavBtn = styled.span`
   top: 60%;
   right: 0;
   border-radius: 50%;
+  border: .5px solid lightgray;
   padding: .7rem;
-  font-size: 1rem;
-  background-color: lightgray;
+  font-size: 1.2rem;
+  background-color: white;
   transition: .5s all ease-in;
   cursor: pointer;
-  &:hover {
-    background-color: lightpink;
-  }
+  color: #82858F;
+  font-weight: bold;
 `;
 
 const HeaderContainer = styled.header`
-  border: 1px solid green;
+  border: 1px solid #A6A9AC;
   display: grid;
   grid-template-columns: 1fr 3rem 1fr;
   grid-template-rows: auto;
@@ -171,6 +175,7 @@ const HeaderContainer = styled.header`
       line-height: 1.4rem;
       overflow: hidden;
       border: 1px solid;
+      font-size: 1em;
       padding: .5rem;
       border-radius: 5px 0 5px 0;
       color: black;
@@ -294,7 +299,7 @@ const ArticleViewContainer = styled.article`
     margin-top: .3rem;
 
     & :nth-child(1) {
-      color: magenta;
+      color: #1B2333;
       font-size: 1.5em;
       font-weight: 900;
     }
@@ -334,7 +339,7 @@ const ArticleViewContainer = styled.article`
 const ArtForm = styled.form`
   margin-top: 7rem;
   border-radius: 1rem;
-  box-shadow: 0px 0px 2px 2px #EB73D5; 
+  border: 1px solid #CBCCCD;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -379,5 +384,5 @@ const FormButton = styled.button`
 `;
 
 export {
-  ArticlePreview, Container, HeaderContainer, MainSection, TheListings, AvatarContainer, ArticleViewContainer, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn, ArtForm, FormButton,
+  ArticlePreview, Container, HeaderContainer, MainSection, TheListings, AvatarContainer, ArticleViewContainer, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn, ArtForm, FormButton, SectionHeading
 };

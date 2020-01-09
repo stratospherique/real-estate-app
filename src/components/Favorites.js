@@ -1,13 +1,13 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { TheListings } from '../styled-components/main';
+import { TheListings, SectionHeading } from '../styled-components/main';
 import Items from './List-item';
 
 
 const Favorites = ({ likedItems }) => (
   <div>
-    <h3>List of Appreciated Real Estates</h3>
+    <SectionHeading>List of Appreciated Real Estates</SectionHeading>
     <TheListings>
       <Items items={likedItems} />
     </TheListings>

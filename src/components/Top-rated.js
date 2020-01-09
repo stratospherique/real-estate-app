@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Items from './List-item';
-import { TheListings } from '../styled-components/main';
+import { TheListings, SectionHeading } from '../styled-components/main';
 
 const TopRated = ({ trending }) => (
   <div>
-    <h3>Trending</h3>
+    <SectionHeading>Trending</SectionHeading>
     <TheListings>
       <Items items={trending} />
     </TheListings>

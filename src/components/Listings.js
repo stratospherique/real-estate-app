@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { TheListings } from '../styled-components/main';
+import { TheListings, SectionHeading } from '../styled-components/main';
 import Items from './List-item';
 
 const Listings = ({ items }) => (
   <div>
-    <h3>Real Estates</h3>
+    <SectionHeading>Real Estates</SectionHeading>
     <TheListings>
       <Items items={items} />
     </TheListings>
