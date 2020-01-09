@@ -383,6 +383,40 @@ const FormButton = styled.button`
   font-weight: 900;
 `;
 
+const AboutContainer = styled.div`
+  border: 1px solid #CBCCCD;
+  padding: 1rem;
+  border-radius: .5rem;
+
+  h3 {
+    font-size: 1.5em;
+    margin-bottom: 1rem;
+    color: #222A39;
+  }
+
+  h4 {
+    font-size: 1em;
+    margin-bottom: .5rem;
+    color: #D831B5;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+
+    p {
+      margin-bottom: 5px;
+    }
+    & span {
+      width: 1.5rem;
+      display: inline-block;
+      text-align: center;
+      color: #57DAD7;
+    }
+  }
+`;
+
 export {
-  ArticlePreview, Container, HeaderContainer, MainSection, TheListings, AvatarContainer, ArticleViewContainer, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn, ArtForm, FormButton, SectionHeading
+  ArticlePreview, Container, HeaderContainer, MainSection, TheListings, AvatarContainer, ArticleViewContainer, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn, ArtForm, FormButton, SectionHeading, AboutContainer
 };
