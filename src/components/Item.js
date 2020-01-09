@@ -39,7 +39,7 @@ class Item extends React.Component {
       <ArticlePreview>
         <Link to={{ pathname: `/show/${index}` }}>
           <PreviewIMG src={imgLink} alt={altText} className="preview" />
-          <ArtPrice className="art-price"><span>Price:</span><span>{price} $</span></ArtPrice>
+          <ArtPrice className="art-price"><span>Price:</span><span> $ {price}</span></ArtPrice>
           <ArtDesc className="art-desc"><span>Description:</span><span>{description}</span></ArtDesc>
         </Link>
         {isAdmin ? <DelBtn onClick={() => this.handleRemove(index)} className="del-button">✗</DelBtn> : null}

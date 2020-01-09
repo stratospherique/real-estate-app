@@ -4,9 +4,12 @@ import { TheListings } from '../styled-components/main';
 import Items from './List-item';
 
 const Listings = ({ items }) => (
-  <TheListings>
-    <Items items={items} />
-  </TheListings>
+  <div>
+    <h3>Real Estates</h3>
+    <TheListings>
+      <Items items={items} />
+    </TheListings>
+  </div>
 );
 
 

@@ -6,9 +6,12 @@ import Items from './List-item';
 
 
 const Favorites = ({ likedItems }) => (
-  <TheListings>
-    <Items items={likedItems} />
-  </TheListings>
+  <div>
+    <h3>List of Appreciated Real Estates</h3>
+    <TheListings>
+      <Items items={likedItems} />
+    </TheListings>
+  </div>
 );
 
 

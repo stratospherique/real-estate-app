@@ -4,9 +4,12 @@ import Items from './List-item';
 import { TheListings } from '../styled-components/main';
 
 const TopRated = ({ trending }) => (
-  <TheListings>
-    <Items items={trending} />
-  </TheListings>
+  <div>
+    <h3>Trending</h3>
+    <TheListings>
+      <Items items={trending} />
+    </TheListings>
+  </div>
 )
 
 

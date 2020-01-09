@@ -10,7 +10,7 @@ const Article = ({ theItem }) => (
         <ArticleViewContainer>
           <img src={theItem.preview[0]} alt="oh ma" className="art-img" />
           <div className="art-l1">
-            <span>{theItem.price} $</span>
+            <span>$ {theItem.price}</span>
             <span>🌟 {theItem.rating}</span>
           </div>
           <p className="art-l2">{theItem.description}</p>
