@@ -1,68 +1,45 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Real Estate mobile App (REMA)
 
-## Available Scripts
+<p align="center"><img src="https://image.freepik.com/free-vector/modern-cottage-houses-set_74855-305.jpg" />
+</p>
 
-In the project directory, you can run:
+### Pilot:
+- **REMA** is a web app that enables the user to navigate through a wide variety of Real Estates via nice and easy to use interface. 
 
-### `npm start`
+### Features:
+  The app offers a set of cool features distinguishable by the user login status:
+  - **Not Logged(visitor)** : Consult The Real Estates registred in the app
+  - **Logged(Normal User)** : Consult The Real Estates registred in the app with the possibility to add a selection of real estates to favorities
+  - **Logged(SuperUser)** : Same as Normal User along with admin priviliges(i.e create, delete real estates)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Technologies Used
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+In this app we used the following technologies:
 
-### `npm test`
+HTML | CSS(SASS) | Javascript | React | Redux | Rails API(back-end)
+------------ | ------------- | ----------- | ----------- | ----------- | -----------
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/1200px-HTML5_logo_and_wordmark.svg.png" width="50" /> | <img src="https://img.icons8.com/windows/64/000000/sass.png"> | <img src="https://img.icons8.com/color/48/000000/javascript.png"> | <img src="https://img.icons8.com/officel/40/000000/react.png"> | <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--heipuOTP--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://redux.js.org/img/redux.svg" width="50" /> | <img src="https://miro.medium.com/max/4000/1*RbEWsfZsxeb5ck6Pmi23PQ.png" width="50" />
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* This design of this project is an assignment that falls under microverse's Final Capstone Project module:
+  - [link to the assignment](https://www.notion.so/Final-Capstone-Project-Listings-App-f3610268057941e481d35b269da30f0c)
 
-### `npm run build`
+### Instructions to run the app locally
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+$ git clone {url}
+$ cd {repo-name}
+$ npm start
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Live Version (Netlify & heroku)
+<p align="center"><img src="public/logo192.png" /></p>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **[Netlify]** [App live](https://clever-hugle-f515ec.netlify.com/)
 
-### `npm run eject`
+### Link to Backend code
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- The backend part of the project is available [here](https://github.com/stratospherique/final-project-backend)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Contributors (for more Info)
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- **__Ahmed Mahfoudh__** | [LinkedIn](https://www.linkedin.com/in/ahmed-mahfoudh-6414b6121/)

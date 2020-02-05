@@ -1,0 +1,30 @@
+{
+  "articles": [
+    {
+      "id": 0,
+      "Description": "2 Bedrooms",
+      "price": "5558$",
+      "preview": [
+        "https://www.vanupied.com/wp-content/uploads/68550354.jpg"
+      ],
+      "buildingType": "Panel",
+      "propertyType": "Appartments",
+      "city": "clevland",
+      "footage": "5654 sqft",
+      "rating": 5
+    },
+    {
+      "id": 1,
+      "Description": "3 Bedrooms",
+      "price": "5558$",
+      "preview": [
+        "https://media-cdn.tripadvisor.com/media/photo-s/0c/68/26/ab/getlstd-property-photo.jpg"
+      ],
+      "buildingType": "Panel",
+      "propertyType": "Appartments",
+      "city": "houston",
+      "footage": "5654 sqft",
+      "rating": 2
+    }
+  ]
+}
