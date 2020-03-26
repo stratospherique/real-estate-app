@@ -1,9 +1,11 @@
-# Real Estate mobile App (REMA)
+![beta development](https://img.shields.io/badge/beta-development-green?style=flat-square)
+![Hireable](https://cdn.rawgit.com/hiendv/hireable/master/styles/default/yes.svg)
 
-<p align="center"><img src="https://image.freepik.com/free-vector/modern-cottage-houses-set_74855-305.jpg" />
-</p>
+# 💻 Real Estate mobile App (BETA)
 
-### Pilot:
+![alt text](1-web.png)
+![alt text](1mobile.png)
+
 - **REMA** is a web app that enables the user to navigate through a wide variety of Real Estates via nice and easy to use interface. 
 
 ### Features:
@@ -23,23 +25,59 @@ HTML | CSS(SASS) | Javascript | React | Redux | Rails API(back-end)
 * This design of this project is an assignment that falls under microverse's Final Capstone Project module:
   - [link to the assignment](https://www.notion.so/Final-Capstone-Project-Listings-App-f3610268057941e481d35b269da30f0c)
 
-### Instructions to run the app locally
 
+## ✨ Live Demo
+
+You can look at it [here](https://clever-hugle-f515ec.netlify.com/)
+
+## 🚀 Getting Started
+
+To get a local copy up and running follow these simple example steps.
+
+### Clone
+
+```sh
+git git@github.com:stratospherique/real-estate-app.git
+cd real-estate-app
 ```
-$ git clone {url}
-$ cd {repo-name}
-$ npm start
-```
-
-### Live Version (Netlify & heroku)
-<p align="center"><img src="public/logo192.png" /></p>
-
-- **[Netlify]** [App live](https://clever-hugle-f515ec.netlify.com/)
 
 ### Link to Backend code
 
 - The backend part of the project is available [here](https://github.com/stratospherique/final-project-backend)
 
-### Contributors (for more Info)
+### Install
 
-- **__Ahmed Mahfoudh__** | [LinkedIn](https://www.linkedin.com/in/ahmed-mahfoudh-6414b6121/)
+```sh
+npm install
+```
+
+### Usage
+
+```sh
+npm start
+```
+
+## :pencil2: Todo
+- Tests to be added
+
+## Author
+
+:male_detective: Ahmed Mahfoudh
+
+- [Github](https://github.com/stratospherique)
+- [Linkedin](https://www.linkedin.com/in/ahmed-mahfoudh/)
+- [Twitter](https://twitter.com/AhmedMahfoudh8)
+- [Email](mailto:ahmed.mahfoudh1991@gmail.com?subject=Website%20Inquiry)
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!
+
+Feel free to check the [issues page](issues/).
+
+## Show your support
+
+Give a ⭐️ if you like this project!
+
+> “There is no exercise better for the heart than reaching down and lifting people up.” 
+John Holmes
