@@ -19,7 +19,7 @@ class Login extends React.Component {
     axios.post(`${DOMAIN}/login`, { user: newUser }, { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in) {
-          this.props.loginSuccess(response.data.user)
+          this.props.loginSuccess(response.data.user, response.data.link)
           this.redirect();
         } else {
           this.setState({
@@ -67,10 +67,11 @@ const mapDispatchToProps = (dispatch) => ({
   loginStart: () => {
     console.log('login started!');
   },
-  loginSuccess: (user) => {
+  loginSuccess: (user, link) => {
     dispatch({
       type: 'LOGGED_IN',
-      user
+      user,
+      link
     })
   }
 })

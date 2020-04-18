@@ -18,10 +18,15 @@ class SignUp extends React.Component {
       password: this.pwd.value,
       password_confirmation: this.pwdC.value,
     }
-    axios.post(`${DOMAIN}/users`, { user: newUser }, { withCredentials: true })
+
+    const image = {
+      avatar: this.fileInput.files[0]
+    }
+    console.log(image)
+    axios.post(`${DOMAIN}/users`, { user: newUser, img: image }, { withCredentials: true })
       .then((response) => {
         if (response.data.user) {
-          this.props.signUpSuccess(response.data.user)
+          this.props.signUpSuccess(response.data.user, response.data.link)
           this.redirect();
         } else {
           this.setState({
@@ -31,7 +36,7 @@ class SignUp extends React.Component {
       })
       .catch((errors) => {
         this.setState({
-          errors: ['API Errors'],
+          errors: errors,
         })
       })
   };
@@ -63,6 +68,9 @@ class SignUp extends React.Component {
         <div>
           <input type="password" placeholder="Password confirmation" ref={(input) => this.pwdC = input} />
         </div>
+        <div>
+          <input type="file" name="avatar" accept="image/*" ref={(input) => this.fileInput = input} />
+        </div>
         <FormButton type="submit">Sign UP</FormButton>
       </ArtForm>
     );
@@ -73,10 +81,11 @@ const mapDispatchToProps = (dispatch) => ({
   signUpStart: () => {
     console.log('hey');
   },
-  signUpSuccess: (user) => {
+  signUpSuccess: (user, link) => {
     dispatch({
       type: 'LOGGED_IN',
-      user
+      user,
+      link
     })
   },
 })

@@ -59,9 +59,11 @@ const mapDispatchToProps = (dispatch) => ({
   loginStatus: () => {
     axios.get(`${DOMAIN}/logged_in`, { withCredentials: true }).then((response) => {
       if (response.data.logged_in) {
+        console.log(response.data.link)
         dispatch({
           type: 'LOGGED_IN',
           user: response.data.user,
+          link: response.data.link,
         })
         axios.get(`${DOMAIN}/user/${response.data.user.id}/favorites`, { withCredentials: true })
           .then((response) => {

@@ -7,6 +7,7 @@ import App from './components/App';
 import globalReducer from './reducers/index';
 
 
+
 ReactDOM.render(
   <Provider store={createStore(globalReducer)}>
     <App />

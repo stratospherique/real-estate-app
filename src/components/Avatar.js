@@ -43,7 +43,7 @@ class Avatar extends React.Component {
     ) : <UserName cls="hidden" />
     return (
       <AvatarContainer onPointerLeave={this.handleResume} onPointerEnter={this.handleDrop}>
-        <img src="https://www.w3schools.com/howto/img_avatar2.png" className="avatar-pic" alt="Avatar" />
+        <img src={this.props.image} className="avatar-pic" alt="Avatar" />
         {dropMenu}
       </AvatarContainer>
     );
