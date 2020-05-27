@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -19,15 +19,18 @@ import Favorites from './Favorites';
 import { getItems, getItemsFail } from '../actions/index';
 import DOMAIN from '../_helpers/api-source';
 
-class App extends React.Component {
+const App = (props) => {
 
-  constructor(props) {
-    super(props);
+
+  useEffect(() => {
     props.getItems();
     props.loginStatus();
-  }
+  }, [])
 
-  render() {
+  useEffect(() => {
+    props.loginStatus();
+  }, [props.currentUser])
+
     return (
       <Router>
         <Container>
@@ -48,7 +51,6 @@ class App extends React.Component {
       </Router>
     )
   }
-}
 
 
 const mapStateToProps = (state) => ({
@@ -59,7 +61,6 @@ const mapDispatchToProps = (dispatch) => ({
   loginStatus: () => {
     axios.get(`${DOMAIN}/logged_in`, { withCredentials: true }).then((response) => {
       if (response.data.logged_in) {
-        console.log(response.data.link)
         dispatch({
           type: 'LOGGED_IN',
           user: response.data.user,
@@ -80,13 +81,6 @@ const mapDispatchToProps = (dispatch) => ({
           type: 'CLEAR_LIKED',
         })
       }
-      axios.get(`${DOMAIN}/articles/trending`)
-        .then((response) => {
-          dispatch({
-            type: 'GET_TRENDING',
-            ids: response.data.trending,
-          })
-        })
     })
   },
   getItems: () => {

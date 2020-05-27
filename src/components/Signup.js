@@ -12,6 +12,7 @@ class SignUp extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
     const newUser = {
       username: this.username.value,
       email: this.email.value,
@@ -19,11 +20,17 @@ class SignUp extends React.Component {
       password_confirmation: this.pwdC.value,
     }
 
-    const image = {
-      avatar: this.fileInput.files[0]
+    if (this.fileInput.files[0]) {
+      newUser['avatar'] = this.fileInput.files[0]
     }
-    console.log(image)
-    axios.post(`${DOMAIN}/users`, { user: newUser, img: image }, { withCredentials: true })
+
+    const formData = new FormData();
+
+    Object.entries(newUser).forEach(
+      ([key, value]) => formData.append(key, value)
+    )
+
+    axios.post(`${DOMAIN}/users`, formData, { withCredentials: true })
       .then((response) => {
         if (response.data.user) {
           this.props.signUpSuccess(response.data.user, response.data.link)
@@ -36,7 +43,7 @@ class SignUp extends React.Component {
       })
       .catch((errors) => {
         this.setState({
-          errors: errors,
+          errors: errors.response.data.errors,
         })
       })
   };

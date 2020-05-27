@@ -18,18 +18,20 @@ class Login extends React.Component {
     }
     axios.post(`${DOMAIN}/login`, { user: newUser }, { withCredentials: true })
       .then((response) => {
-        if (response.data.logged_in) {
+          axios.get(`${DOMAIN}/user/${response.data.user.id}/favorites`, { withCredentials: true })
+          .then((resp) => {
+                 this.props.getLikedArts(resp.data)
+          })
+          .catch((err) => {
+            console.error(err);
+          })
           this.props.loginSuccess(response.data.user, response.data.link)
           this.redirect();
-        } else {
-          this.setState({
-            errors: response.data.errors,
-          })
-        }
+        
       })
       .catch((err) => {
         this.setState({
-          errors: ['API errors'],
+          errors: err.response.data.errors,
         })
       })
   }
@@ -72,6 +74,12 @@ const mapDispatchToProps = (dispatch) => ({
       type: 'LOGGED_IN',
       user,
       link
+    })
+  },
+  getLikedArts: (data) => {
+    dispatch({
+      type: 'GET_LIKED',
+      liked: data,
     })
   }
 })
