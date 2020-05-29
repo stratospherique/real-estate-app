@@ -24,12 +24,14 @@ const App = (props) => {
 
   useEffect(() => {
     props.getItems();
+    props.getTrending();
     props.loginStatus();
   }, [])
 
   useEffect(() => {
-    props.loginStatus();
-  }, [props.currentUser])
+    if (props.currentUser.logged_in) props.getLikedArts(props.currentUser.user.id);
+  }, [props.currentUser.logged_in])
+
 
     return (
       <Router>
@@ -54,33 +56,25 @@ const App = (props) => {
 
 
 const mapStateToProps = (state) => ({
-  current_user: state.currentUser,
+  currentUser: state.currentUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loginStatus: () => {
     axios.get(`${DOMAIN}/logged_in`, { withCredentials: true }).then((response) => {
-      if (response.data.logged_in) {
         dispatch({
           type: 'LOGGED_IN',
           user: response.data.user,
           link: response.data.link,
         })
-        axios.get(`${DOMAIN}/user/${response.data.user.id}/favorites`, { withCredentials: true })
-          .then((response) => {
-            dispatch({
-              type: 'GET_LIKED',
-              liked: response.data,
-            })
-          })
-      } else {
-        dispatch({
-          type: 'LOGGED_OUT',
-        })
-        dispatch({
-          type: 'CLEAR_LIKED',
-        })
-      }
+    })
+    .catch((err) => {
+      dispatch({
+        type: 'LOGGED_OUT',
+      })
+      dispatch({
+        type: 'CLEAR_LIKED',
+      })
     })
   },
   getItems: () => {
@@ -92,6 +86,27 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(getItemsFail());
       });
   },
+  getTrending: () => {
+    axios.get(`${DOMAIN}/articles/trending`)
+    .then((response) => {
+      dispatch({
+        type: 'GET_TRENDING',
+        ids: response.data.trending,
+      })
+    })
+  },
+  getLikedArts: (userId) => {
+    axios.get(`${DOMAIN}/user/${userId}/favorites`, { withCredentials: true })
+    .then((resp) => {
+           dispatch({
+             type: 'GET_LIKED',
+             liked: resp.data,
+           })
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

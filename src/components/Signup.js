@@ -32,16 +32,11 @@ class SignUp extends React.Component {
 
     axios.post(`${DOMAIN}/users`, formData, { withCredentials: true })
       .then((response) => {
-        if (response.data.user) {
           this.props.signUpSuccess(response.data.user, response.data.link)
           this.redirect();
-        } else {
-          this.setState({
-            errors: response.data.errors,
-          })
-        }
       })
       .catch((errors) => {
+        console.log(errors)
         this.setState({
           errors: errors.response.data.errors,
         })
