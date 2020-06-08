@@ -2,12 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { TheListings, SectionHeading } from '../styled-components/main';
 import Items from './List-item';
+// const Items = React.lazy(() => import('./List-item'));
 
 const Listings = ({ items }) => (
   <div>
     <SectionHeading>Real Estates</SectionHeading>
     <TheListings>
-      <Items items={items} />
+        <Items items={items} />
     </TheListings>
   </div>
 );

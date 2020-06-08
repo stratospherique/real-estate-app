@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import LazyLoad from 'react-lazyload';
 import axios from 'axios';
 import { ArticlePreview, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn } from '../styled-components/main';
 import { getItems, getItemsFail } from '../actions/index';
@@ -38,7 +39,12 @@ class Item extends React.Component {
     return (
       <ArticlePreview>
         <Link to={{ pathname: `/show/${index}` }}>
-          <PreviewIMG src={imgLink} alt={altText} className="preview" />
+          <LazyLoad
+            placeholder={<span>Loading...</span>}
+            once={true}
+          >
+            <PreviewIMG source={imgLink} alt={altText} className="preview" loading="lazy" />
+          </LazyLoad>
           <ArtPrice className="art-price"><span>Price:</span><span> $ {price}</span></ArtPrice>
           <ArtDesc className="art-desc"><span>Description:</span><span>{description}</span></ArtDesc>
         </Link>

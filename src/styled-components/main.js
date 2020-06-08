@@ -1,4 +1,8 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import missingImage from '../assets/not-available.png';
 
 const Container = styled.div`
   border: 1px solid;
@@ -61,19 +65,78 @@ const ArticlePreview = styled.div`
   }
 `;
 
-const PreviewIMG = styled.img`
+const PreviewComponent = ({ source, className, altText }) => {
+
+  const [isLoading, setIsLoading] = useState(true)
+
+  const [hasError, setHasError] = useState(false);
+
+  return (
+    <>
+      { isLoading && !hasError ? <Loading /> : null}
+      { !hasError ? <img src={source} className={className} altText={altText} onError={() => setHasError(true)} 
+      onLoad={() => setIsLoading(false)} /> : null}
+      { hasError ? <img src={missingImage} className={className} altText="image unavailable" /> : null }
+    </>
+  )
+}
+
+const PreviewIMG = styled(PreviewComponent)`
   width: 100%;
   max-width: 250px;
   max-height: 150px;
   height: 70%;
   border-radius: 10px 10px 0px 0px;
   transition: .5s opacity ease-out;
+  positon: relative;
+
+  & > svg {
+    position: absolute;
+    left: 40%;
+    top: 40%;
+  }
 
   &:hover{
     opacity: .6;
     background-color: gray;
   }
-`
+`;
+
+const LoadingDiv = ({className, children}) => (
+  <div className={className}>
+    <div>
+      <FontAwesomeIcon icon={faSpinner} spin />
+    </div>
+    {children}
+  </div>
+)
+
+const Loading = styled(LoadingDiv)`
+  width: 100%;
+  height: 100%;
+  background-color: rgb(100,100,100);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-content: center;
+  z-index: 1000;
+
+  & > div {
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(88,155,88);
+    border-radius: 1rem;
+
+    svg {
+      color: white;
+      font-size: 2rem;
+    }
+  }
+`;
 
 const ArtPrice = styled.div`
   padding-left: .3rem;
@@ -418,5 +481,5 @@ const AboutContainer = styled.div`
 `;
 
 export {
-  ArticlePreview, Container, HeaderContainer, MainSection, TheListings, AvatarContainer, ArticleViewContainer, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn, ArtForm, FormButton, SectionHeading, AboutContainer
+  ArticlePreview, Container, HeaderContainer, MainSection, TheListings, AvatarContainer, ArticleViewContainer, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn, ArtForm, FormButton, SectionHeading, AboutContainer, Loading
 };

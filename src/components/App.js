@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,13 +6,14 @@ import {
 } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Home from '../pages/home';
 import NotFound from '../pages/notfound';
 import NavSecion from './Navigation';
 import Login from './Login';
 import SignUp from './Signup';
 import Article from '../pages/article-view';
-import { Container, MainSection } from '../styled-components/main';
+import { Container, MainSection, Loading } from '../styled-components/main';
 import About from '../pages/about';
 import AddForm from './add-item';
 import Favorites from './Favorites';
@@ -21,20 +22,30 @@ import DOMAIN from '../_helpers/api-source';
 
 const App = (props) => {
 
+  const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
     props.getItems();
     props.getTrending();
     props.loginStatus();
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000)
   }, [])
 
+
   useEffect(() => {
+    setLoading(true);
     if (props.currentUser.logged_in) props.getLikedArts(props.currentUser.user.id);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000)
   }, [props.currentUser.logged_in])
 
 
     return (
       <Router>
+        {isLoading ? <Loading /> :
         <Container>
           <NavSecion />
           <MainSection>
@@ -49,7 +60,7 @@ const App = (props) => {
               <Route path="*" component={NotFound} />
             </Switch>
           </MainSection>
-        </Container>
+        </Container>}
       </Router>
     )
   }
