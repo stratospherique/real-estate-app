@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faHeart } from '@fortawesome/free-solid-svg-icons';
 import missingImage from '../assets/not-available.png';
 
 const Container = styled.div`
@@ -114,7 +114,7 @@ const LoadingDiv = ({className, children}) => (
 const Loading = styled(LoadingDiv)`
   width: 100%;
   height: 100%;
-  background-color: rgb(100,100,100);
+  ${props => props.bgColor ? `background-color: ${props.bgColor};` : 'background-color: rgb(100,100,100);'}
   position: absolute;
   left: 0;
   top: 0;
@@ -128,11 +128,11 @@ const Loading = styled(LoadingDiv)`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(88,155,88);
+    ${props => props.squareColor ? `background-color: ${props.squareColor};` : 'background-color: rgb(10,50,0);'};
     border-radius: 1rem;
 
     svg {
-      color: white;
+      ${props => props.spinnerColor ? `color: ${props.spinnerColor};` : 'color: pink;'};
       font-size: 2rem;
     }
   }
@@ -186,7 +186,14 @@ const DelBtn = styled.span`
   }
 `;
 
-const FavBtn = styled.span`
+const AddFavBtn = ({className, children, triggerLike}) => (
+  <div className={className} onClick={triggerLike}>
+    <FontAwesomeIcon icon={faHeart} />
+    {children}
+  </div>
+)
+
+const FavBtn = styled(AddFavBtn)`
   position: absolute;
   top: 60%;
   right: 0;
@@ -199,6 +206,11 @@ const FavBtn = styled.span`
   cursor: pointer;
   color: #82858F;
   font-weight: bold;
+
+  & > svg {
+    transition: color .5s ease;
+    color: ${props => props.liked ? 'red;' : 'gray;'}
+  }
 `;
 
 const HeaderContainer = styled.header`

@@ -7,24 +7,25 @@ import { ArticlePreview, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn } from '.
 import { getItems, getItemsFail } from '../actions/index';
 import DOMAIN from '../_helpers/api-source';
 
-class Item extends React.Component {
-  handleRemove = (index) => {
-    if (!this.props.history) return
+// class Item extends React.Component {
+const Item = ({ index, imgLink, altText, price, description, isAdmin, isLogged, likedItems, history, user_id, index: article_id, addLiked, getItems }) => {
+  const handleRemove = (index) => {
+    if (!history) return
     axios.delete(`${DOMAIN}/articles/${index}`)
       .then((response) => {
-        this.props.getItems();
+        getItems();
       })
       .catch((errors) => {
         alert(errors);
       })
   }
 
-  redirect = () => {
-    this.props.history.push('/favorities');
+  const redirect = () => {
+    history.push('/favorities');
   }
 
-  handleLike = () => {
-    const { user_id, index: article_id, addLiked } = this.props
+  const handleLike = () => {
+    // const { user_id, index: article_id, addLiked } = this.props
     axios.post(`${DOMAIN}/favorites`, { favorite: { user_id, article_id } })
       .then((response) => {
         addLiked(response.data);
@@ -34,28 +35,26 @@ class Item extends React.Component {
       })
   }
 
-  render() {
-    const { index, imgLink, altText, price, description, isAdmin, isLogged, likedItems } = this.props;
+    // const { index, imgLink, altText, price, description, isAdmin, isLogged, likedItems } = this.props;
     return (
       <ArticlePreview>
         <Link to={{ pathname: `/show/${index}` }}>
           <LazyLoad
             placeholder={<span>Loading...</span>}
-            once={true}
+            once
           >
-            <PreviewIMG source={imgLink} alt={altText} className="preview" loading="lazy" />
+            <PreviewIMG source={imgLink} alt={altText} className="preview" loading="lazy" bgColor="white" />
           </LazyLoad>
           <ArtPrice className="art-price"><span>Price:</span><span> $ {price}</span></ArtPrice>
           <ArtDesc className="art-desc"><span>Description:</span><span>{description}</span></ArtDesc>
         </Link>
-        {isAdmin ? <DelBtn onClick={() => this.handleRemove(index)} className="del-button">✗</DelBtn> : null}
+        {isAdmin ? <DelBtn onClick={() => handleRemove(index)} className="del-button">✗</DelBtn> : null}
         {isLogged ? (
-          likedItems.includes(index) ? <FavBtn>💗</FavBtn> : <FavBtn onClick={this.handleLike}>♡</FavBtn>
+          likedItems.includes(index) ? <FavBtn liked /> : <FavBtn triggerLike={handleLike} />
         ) : null}
 
       </ArticlePreview>
     )
-  }
 }
 
 
