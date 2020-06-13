@@ -20,11 +20,40 @@ import Favorites from './Favorites';
 import { getItems, getItemsFail } from '../actions/index';
 import DOMAIN from '../_helpers/api-source';
 
+const device = width => {
+  switch (true) {
+    case (width < 750):
+        return 'mobile'
+    case (width >= 750 && width < 1024):
+        return 'tablet'
+    default:
+        return 'web';
+  }
+}
+
 const App = (props) => {
 
   const [isLoading, setLoading] = useState(true)
 
+  const [target, setTarget] = useState(device(window.innerWidth))
+
+  const handleResize = (e) => {
+    
+    setTarget(device(window.innerWidth))
+  }
+
   useEffect(() => {
+    props.getViewPort(target);
+    window.addEventListener('resize', handleResize);
+
+    return _ => {
+      window.removeEventListener('resize', handleResize);
+    }
+  }, [target])
+
+
+  useEffect(() => {
+    props.getViewPort(target);
     props.getItems();
     props.getTrending();
     props.loginStatus();
@@ -39,7 +68,6 @@ const App = (props) => {
       setLoading(false);
     }, 2000)
   }, [props.currentUser.logged_in])
-
 
     return (
       <Router>
@@ -114,6 +142,12 @@ const mapDispatchToProps = (dispatch) => ({
     })
     .catch((err) => {
       console.error(err);
+    })
+  },
+  getViewPort: (target) => {
+    dispatch({
+      type: 'UPDATE_VIEWPORT',
+      target,
     })
   }
 })

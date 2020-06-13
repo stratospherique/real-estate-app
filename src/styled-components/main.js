@@ -74,9 +74,9 @@ const PreviewComponent = ({ source, className, altText }) => {
   return (
     <>
       { isLoading && !hasError ? <Loading bgColor="white" size="small" spinnerColor="white" /> : null}
-      { !hasError ? <img src={source} className={className} altText={altText} onError={() => setHasError(true)} 
+      { !hasError ? <img src={source} className={className} alttext={altText} onError={() => setHasError(true)} 
       onLoad={() => setIsLoading(false)} /> : null}
-      { hasError ? <img src={missingImage} className={className} altText="image unavailable" /> : null }
+      { hasError ? <img src={missingImage} className={className} alttext="image unavailable" /> : null }
     </>
   )
 }
