@@ -203,16 +203,20 @@ const FavBtn = styled(AddFavBtn)`
 
   & > svg {
     transition: color .5s ease;
-    color: ${props => props.liked ? 'red;' : 'gray;'}
+    color: ${({liked}) => liked ? 'red;' : 'gray;'}
   }
 `;
 
 const HeaderContainer = styled.header`
   border: 1px solid #A6A9AC;
+  /*
   display: grid;
   grid-template-columns: 1fr 3rem 1fr;
   grid-template-rows: auto;
   grid-template-areas: "left-side center-side right-side";
+  */
+  display: flex;
+  justfy-content: space-around;
   height: 3.5rem;
   width: 100%;
   position: fixed;
@@ -221,15 +225,15 @@ const HeaderContainer = styled.header`
   @media screen and (max-width: 750px){
     bottom: 0;
   }
-
+  /*
   @media screen and (min-width: 751px) {
     grid-template-columns: 1fr 1fr 5rem;
     grid-template-areas: "left-side right-side center-side";
-  }
+  }*/
   background-color: white;
 
   nav {
-    width: 100%;
+    width: ${({rightStart}) => rightStart ? '45%' : '90%'};
     height: 100%;
     display: flex;
     justify-content: space-around;
@@ -264,27 +268,22 @@ const HeaderContainer = styled.header`
   .activeTab {
     color: gray;
   }
-
-  .nav-left {
-      grid-area: left-side;
-      
-    }
-
-  .nav-right {
-      grid-area: right-side;
-  }
-  
 `;
 
 const AvatarContainer = styled.div`
-  grid-area: center-side;
   position: relative;
+  display:flex;
+  justify-content: center;
+  width: 10%;
   height: 100%;
 
+
   .avatar-pic {
+    box-sizing: content-box;
     vertical-align: middle;
     width: 3rem;
     height: 3rem;
+    border: 1px dotted; 
     border-radius: 50%;
     position: absolute;
     top: 10%;
@@ -295,7 +294,7 @@ const AvatarContainer = styled.div`
     width: 4rem;
     height: 2.5rem;
     position: absolute;
-    left: -10%;
+    left: calc(50% - 2rem);
     display: flex;
     flex-direction: column;
     align-items: stretch;
