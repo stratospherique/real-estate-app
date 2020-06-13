@@ -73,7 +73,7 @@ const PreviewComponent = ({ source, className, altText }) => {
 
   return (
     <>
-      { isLoading && !hasError ? <Loading /> : null}
+      { isLoading && !hasError ? <Loading bgColor="white" size="small" spinnerColor="white" /> : null}
       { !hasError ? <img src={source} className={className} altText={altText} onError={() => setHasError(true)} 
       onLoad={() => setIsLoading(false)} /> : null}
       { hasError ? <img src={missingImage} className={className} altText="image unavailable" /> : null }
@@ -90,19 +90,13 @@ const PreviewIMG = styled(PreviewComponent)`
   transition: .5s opacity ease-out;
   positon: relative;
 
-  & > svg {
-    position: absolute;
-    left: 40%;
-    top: 40%;
-  }
-
   &:hover{
     opacity: .6;
     background-color: gray;
   }
 `;
 
-const LoadingDiv = ({className, children}) => (
+const LoadingDiv = ({ className, children }) => (
   <div className={className}>
     <div>
       <FontAwesomeIcon icon={faSpinner} spin />
@@ -120,11 +114,11 @@ const Loading = styled(LoadingDiv)`
   top: 0;
   display: grid;
   place-content: center;
-  z-index: 1000;
+  z-index: ${({size}) => size && size == 'small' ? '20;' : '1000;'}
 
   & > div {
-    width: 5rem;
-    height: 5rem;
+    width: ${({size}) => size && size == 'small' ? '2rem;' : '5rem;'}
+    height: ${({size}) => size && size == 'small' ? '2rem;' : '5rem;'}
     display: flex;
     justify-content: center;
     align-items: center;
@@ -133,7 +127,7 @@ const Loading = styled(LoadingDiv)`
 
     svg {
       ${props => props.spinnerColor ? `color: ${props.spinnerColor};` : 'color: pink;'};
-      font-size: 2rem;
+      font-size: ${({size}) => size && size == 'small' ? '1rem;' : '2rem;'}
     }
   }
 `;

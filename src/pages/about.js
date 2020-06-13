@@ -7,7 +7,7 @@ const About = () => (
     <h4>Contact info:</h4>
     <div>
       <p><span>☎</span> +216 28389519</p>
-      <p><span>✉</span> ahmedosm10@gmail.com</p>
+      <p><span>✉</span> ahmed.mahfoudh1991@gmail.com</p>
     </div>
   </AboutContainer>
 );

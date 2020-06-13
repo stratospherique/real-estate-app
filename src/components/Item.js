@@ -7,7 +7,6 @@ import { ArticlePreview, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn } from '.
 import { getItems, getItemsFail } from '../actions/index';
 import DOMAIN from '../_helpers/api-source';
 
-// class Item extends React.Component {
 const Item = ({ index, imgLink, altText, price, description, isAdmin, isLogged, likedItems, history, user_id, index: article_id, addLiked, getItems }) => {
   const handleRemove = (index) => {
     if (!history) return
@@ -25,7 +24,6 @@ const Item = ({ index, imgLink, altText, price, description, isAdmin, isLogged, 
   }
 
   const handleLike = () => {
-    // const { user_id, index: article_id, addLiked } = this.props
     axios.post(`${DOMAIN}/favorites`, { favorite: { user_id, article_id } })
       .then((response) => {
         addLiked(response.data);
@@ -35,7 +33,6 @@ const Item = ({ index, imgLink, altText, price, description, isAdmin, isLogged, 
       })
   }
 
-    // const { index, imgLink, altText, price, description, isAdmin, isLogged, likedItems } = this.props;
     return (
       <ArticlePreview>
         <Link to={{ pathname: `/show/${index}` }}>
@@ -43,7 +40,7 @@ const Item = ({ index, imgLink, altText, price, description, isAdmin, isLogged, 
             placeholder={<span>Loading...</span>}
             once
           >
-            <PreviewIMG source={imgLink} alt={altText} className="preview" loading="lazy" bgColor="white" />
+            <PreviewIMG source={imgLink} alt={altText} className="preview" loading="lazy" />
           </LazyLoad>
           <ArtPrice className="art-price"><span>Price:</span><span> $ {price}</span></ArtPrice>
           <ArtDesc className="art-desc"><span>Description:</span><span>{description}</span></ArtDesc>

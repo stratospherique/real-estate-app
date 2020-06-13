@@ -28,9 +28,7 @@ const App = (props) => {
     props.getItems();
     props.getTrending();
     props.loginStatus();
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000)
+    setLoading(false);
   }, [])
 
 
@@ -45,7 +43,7 @@ const App = (props) => {
 
     return (
       <Router>
-        {isLoading ? <Loading /> :
+        {isLoading ? <Loading spinnerColor="lightpink" /> :
         <Container>
           <NavSecion />
           <MainSection>
