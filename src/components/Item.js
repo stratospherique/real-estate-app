@@ -8,23 +8,25 @@ import { getItems, getItemsFail } from '../actions/index';
 import DOMAIN from '../_helpers/api-source';
 
 const Item = ({ index, imgLink, altText, price, description, isAdmin, isLogged, likedItems, history, user_id, index: article_id, addLiked, getItems }) => {
+
   const handleRemove = (index) => {
+    console.log(isLogged)
     if (!history) return
-    axios.delete(`${DOMAIN}/articles/${index}`)
+    axios.delete(`${DOMAIN}/articles/${index}`, { withCredentials: true })
       .then((response) => {
         getItems();
       })
       .catch((errors) => {
-        alert(errors);
+        console.dir(errors);
       })
   }
 
-  const redirect = () => {
+  /* const redirect = () => {
     history.push('/favorities');
-  }
+  } */
 
   const handleLike = () => {
-    axios.post(`${DOMAIN}/favorites`, { favorite: { user_id, article_id } })
+    axios.post(`${DOMAIN}/favorites`, { favorite: { user_id, article_id } }, { withCredentials: true })
       .then((response) => {
         addLiked(response.data);
       })

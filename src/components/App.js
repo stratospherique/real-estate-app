@@ -38,7 +38,6 @@ const App = (props) => {
   const [target, setTarget] = useState(device(window.innerWidth))
 
   const handleResize = (e) => {
-    
     setTarget(device(window.innerWidth))
   }
 
@@ -104,6 +103,7 @@ const mapDispatchToProps = (dispatch) => ({
           user: response.data.user,
           link: response.data.link,
         })
+        console.log(response.data.logged_in)
     })
     .catch((err) => {
       dispatch({
