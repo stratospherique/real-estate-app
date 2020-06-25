@@ -1,55 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { ArtForm, FormButton, ErrorsDisplay } from '../styled-components/main';
 import DOMAIN from '../_helpers/api-source';
 
-class Login extends React.Component {
-  state = {
-    errors: {}
+const Login = ({ history, loginSuccess }) => {
+  const [errors, setErrors] = useState([])
+  const [formFields, setFormFields] = useState({
+    username: '',
+    password: '',
+  })
+
+  const redirect = () => {
+    history.push('/');
   }
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const newUser = {
-      username: this.username.value,
-      password: this.password.value,
-    }
-    axios.post(`${DOMAIN}/login`, { user: newUser }, { withCredentials: true })
+    axios.post(`${DOMAIN}/login`, { user: formFields }, { withCredentials: true })
       .then((response) => {
-          this.props.loginSuccess(response.data.user, response.data.link)
-          this.redirect();
+          loginSuccess(response.data.user, response.data.link)
+          redirect();
       })
       .catch((err) => {
-        this.setState({
-          errors: err.response.data.errors,
-        })
+        setErrors(err.response.data.errors)
       })
   }
 
-  redirect = () => {
-    this.props.history.push('/');
+
+  const handleFieldChange = (e) => {
+    let { name, value } = e.target
+    setFormFields((prevState) => {
+      const tmp = { ...prevState }
+      if (Array.isArray(tmp[`${name}`])) {
+        tmp[`${name}`].push(value);
+      } else tmp[`${name}`] = value;
+      return { ...tmp }
+    })
   }
 
-  render() {
-    return (
-      <ArtForm onSubmit={this.handleSubmit}>
-        <span>Login</span>
-        { this.state.errors.length > 0 ? <ErrorsDisplay action="login" errors={this.state.errors} /> : null }
-        <div>
-          <input type="text" id="username" ref={(input) => this.username = input} />
-        </div>
-        <div>
-          <input type="password" id="password" ref={(input) => this.password = input} />
-        </div>
-        <div>
-          <FormButton type="submit">Sign in</FormButton>
-          <Link to="/sign-up">Sign Up</Link>
-        </div>
-      </ArtForm>
-    );
-  }
+  return (
+    <ArtForm onSubmit={handleSubmit}>
+      <span>Login</span>
+      { errors.length > 0 ? <ErrorsDisplay action="login" errors={errors} /> : null }
+      <div>
+        <input type="text" name="username" value={formFields.username} onChange={handleFieldChange} />
+      </div>
+      <div>
+        <input type="password" name="password" value={formFields.password} onChange={handleFieldChange} />
+      </div>
+      <div>
+        <FormButton type="submit">Sign in</FormButton>
+        <Link to="/sign-up">Sign Up</Link>
+      </div>
+    </ArtForm>
+  );
 }
 
 const mapDispatchToProps = (dispatch) => ({

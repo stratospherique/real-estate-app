@@ -5,7 +5,7 @@ import { ArtForm, FormButton, ErrorsDisplay } from '../styled-components/main';
 import DOMAIN from '../_helpers/api-source';
 
 
-  const AddForm = ({ logged, addItem, history }) => {
+const AddForm = ({ logged, addItem, history }) => {
   const [errors, setErrors] = useState([]);
   const [formFields, setFormFields] = useState({
     description: '',
