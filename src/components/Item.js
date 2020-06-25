@@ -7,7 +7,7 @@ import { ArticlePreview, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn } from '.
 import { getItems, getItemsFail } from '../actions/index';
 import DOMAIN from '../_helpers/api-source';
 
-const Item = ({ index, imgLink, altText, price, description, isAdmin, isLogged, likedItems, history, user_id, index: article_id, addLiked, getItems }) => {
+const Item = ({ index, imgLink, altText, price, description, isAdmin, isLogged, likedItems, history, user_id, index: article_id, addLiked, getItems, flashFailure, flashSuccess }) => {
 
   const handleRemove = (index) => {
     console.log(isLogged)
@@ -15,9 +15,10 @@ const Item = ({ index, imgLink, altText, price, description, isAdmin, isLogged, 
     axios.delete(`${DOMAIN}/articles/${index}`, { withCredentials: true })
       .then((response) => {
         getItems();
+        flashSuccess('Succesfully Deleted');
       })
       .catch((errors) => {
-        console.dir(errors);
+        flashFailure('Oops, Unable to delete!');
       })
   }
 
@@ -29,9 +30,10 @@ const Item = ({ index, imgLink, altText, price, description, isAdmin, isLogged, 
     axios.post(`${DOMAIN}/favorites`, { favorite: { user_id, article_id } }, { withCredentials: true })
       .then((response) => {
         addLiked(response.data);
+        flashSuccess('Item Successfully added to favorites');
       })
       .catch((err) => {
-        console.error(err);
+        flashFailure('Oops, something went wrong!');
       })
   }
 
@@ -80,6 +82,20 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(getItemsFail());
       });
   },
+  flashSuccess: (msg) => {
+    dispatch({
+      type: 'ACTIVATE_FLASH',
+      msg,
+      nature: 'success'
+    })
+  },
+  flashFailure: (msg) => {
+    dispatch({
+      type: 'ACTIVATE_FLASH',
+      msg,
+      nature: 'failure'
+    })
+  }
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Item));

@@ -14,6 +14,7 @@ import Login from './Login';
 import SignUp from './Signup';
 import Article from '../pages/article-view';
 import { Container, MainSection, Loading } from '../styled-components/main';
+import { Flash } from '../styled-components/styled-parts';
 import About from '../pages/about';
 import AddForm from './add-item';
 import Favorites from './Favorites';
@@ -63,6 +64,9 @@ const App = (props) => {
   useEffect(() => {
     setLoading(true);
     if (props.currentUser.logged_in) props.getLikedArts(props.currentUser.user.id);
+    if (props.currentUser.logged_in) {
+      props.welcomeUser(props.currentUser.user.username);
+    } else props.welcomeUser('stranger');
     setTimeout(() => {
       setLoading(false);
     }, 2000)
@@ -73,6 +77,7 @@ const App = (props) => {
         {isLoading ? <Loading spinnerColor="lightpink" /> :
         <Container>
           <NavSecion />
+          <Flash status={props.flashStatus} />
           <MainSection>
             <Switch>
               <Route path="/" exact component={Home} />
@@ -93,6 +98,7 @@ const App = (props) => {
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
+  flashStatus: state.flash.active
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -148,6 +154,13 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({
       type: 'UPDATE_VIEWPORT',
       target,
+    })
+  },
+  welcomeUser: (username) => {
+    dispatch({
+      type: 'ACTIVATE_FLASH',
+      msg: `Welcome ${username}`,
+      nature: 'welcome'
     })
   }
 })

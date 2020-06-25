@@ -4,6 +4,7 @@ import listReducer from './list-reducer';
 import favoritesReducer from './favorites-reducer';
 import trendingReducer from './trending-reducer';
 import viewportReducer from './viewport-reducer';
+import flashReducer from './flash-reducer';
 
 const globalReducer = combineReducers({
   currentUser: currentUserReducer,
@@ -11,6 +12,7 @@ const globalReducer = combineReducers({
   likedItems: favoritesReducer,
   trendingItems: trendingReducer,
   viewport: viewportReducer,
+  flash: flashReducer,
 });
 
 export default globalReducer;
