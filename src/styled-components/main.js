@@ -428,28 +428,38 @@ const ArtForm = styled.form`
     }
   }
 
-  .errors-list {
-    width: 100%;
-    padding: .5rem;
-    background-color: rgba(140,0,0,0.2);
-    border-radius: .6rem;
-
-    & > span {
-      display: inline-block;
-      margin-bottom: .5rem;
-    }
-    
-    & li {
-      list-style: circle;
-      margin-left: 8%;
-    }
-  }
-
   & button {
     margin-top: 10px;
   }
   @media screen and (max-width: 750px) {
     width: 100%;
+  }
+`;
+
+const ErrorsDisplayBasic = ({className, children, errors, action}) => (
+  <div className={className}>
+    {children}
+      <span>Unable to {action} due to the following errors:</span>
+      <ul>
+        {errors.map((item) => <li key={item}>{item}</li>)}
+      </ul>
+  </div>
+);
+
+const ErrorsDisplay = styled(ErrorsDisplayBasic)`
+  width: 100%;
+  padding: .5rem;
+  background-color: rgba(140,0,0,0.2);
+  border-radius: .6rem;
+
+  & > span {
+    display: inline-block;
+    margin-bottom: .5rem;
+  }
+
+  & li {
+    list-style: circle;
+    margin-left: 8%;
   }
 `;
 
@@ -497,5 +507,5 @@ const AboutContainer = styled.div`
 `;
 
 export {
-  ArticlePreview, Container, HeaderContainer, MainSection, TheListings, AvatarContainer, ArticleViewContainer, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn, ArtForm, FormButton, SectionHeading, AboutContainer, Loading
+  ArticlePreview, Container, HeaderContainer, MainSection, TheListings, AvatarContainer, ArticleViewContainer, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn, ArtForm, FormButton, SectionHeading, AboutContainer, Loading, ErrorsDisplay
 };

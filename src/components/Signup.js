@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { ArtForm, FormButton } from '../styled-components/main';
+import { ArtForm, FormButton, ErrorsDisplay } from '../styled-components/main';
 import DOMAIN from '../_helpers/api-source';
 
 
@@ -49,15 +49,10 @@ class SignUp extends React.Component {
 
 
   render() {
-    const errorsDisplay = this.state.errors && this.state.errors.length > 0 ? (
-      <ul>
-        {this.state.errors.map((error) => <li key={error}>{error}</li>)}
-      </ul>
-    ) : null;
     return (
       <ArtForm onSubmit={this.handleSubmit}>
         <span>Login</span>
-        {errorsDisplay}
+        { this.state.errors.length > 0 ? <ErrorsDisplay action="sign up" errors={this.state.errors} /> : null }
         <div>
           <input type="text" placeholder="username" ref={(input) => this.username = input} />
         </div>
