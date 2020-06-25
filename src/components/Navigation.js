@@ -12,7 +12,7 @@ const NavSection = ({ isAdmin, isLogged, avatar, viewport }) => (
     <nav>
       <NavLink to="/" exact activeClassName="activeTab">Home</NavLink>
       {isLogged ? <NavLink to="/favorites" activeClassName="activeTab">Favorities</NavLink> : null}
-      {isAdmin ? <NavLink to="/add-real" activeClassName="activeTab">add appart</NavLink> : null}
+      {isLogged ? <NavLink to="/add-real" activeClassName="activeTab">add appart</NavLink> : null}
       <NavLink to="/about" activeClassName="activeTab">About</NavLink>
     </nav>
     <Avatar image={avatar} />
@@ -24,7 +24,7 @@ const NavSection = ({ isAdmin, isLogged, avatar, viewport }) => (
     </nav>
     <Avatar image={avatar} />
     <nav className="nav-right">
-      {isAdmin ? <NavLink to="/add-real" activeClassName="activeTab">add appart</NavLink> : null}
+      {isLogged ? <NavLink to="/add-real" activeClassName="activeTab">add appart</NavLink> : null}
       <NavLink to="/about" activeClassName="activeTab">About</NavLink>
     </nav>
       </>

@@ -410,6 +410,7 @@ const ArtForm = styled.form`
   border-radius: 1rem;
   border: 1px solid #CBCCCD;
   padding: 1.5rem;
+  width: 22rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -427,10 +428,16 @@ const ArtForm = styled.form`
     }
   }
 
-  & ul {
+  .errors-list {
+    width: 100%;
     padding: .5rem;
     background-color: rgba(140,0,0,0.2);
     border-radius: .6rem;
+
+    & > span {
+      display: inline-block;
+      margin-bottom: .5rem;
+    }
     
     & li {
       list-style: circle;
@@ -440,6 +447,9 @@ const ArtForm = styled.form`
 
   & button {
     margin-top: 10px;
+  }
+  @media screen and (max-width: 750px) {
+    width: 100%;
   }
 `;
 
