@@ -7,8 +7,7 @@ import { ArticlePreview, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn } from '.
 import { getItems, getItemsFail } from '../actions/index';
 import DOMAIN from '../_helpers/api-source';
 
-const Item = ({ index, imgLink, altText, price, description, isAdmin, isLogged, likedItems, history, user_id, index: article_id, addLiked, getItems, flashFailure, flashSuccess }) => {
-
+const Item = ({ index, imgLink, altText, price, description, isAdmin, isLogged, likedItems, history, user_id, index: article_id, addLiked, getItems, flashFailure, flashSuccess, cleanFlash, flashActive }) => {
   const handleRemove = (index) => {
     console.log(isLogged)
     if (!history) return
@@ -22,10 +21,6 @@ const Item = ({ index, imgLink, altText, price, description, isAdmin, isLogged, 
       })
   }
 
-  /* const redirect = () => {
-    history.push('/favorities');
-  } */
-
   const handleLike = () => {
     axios.post(`${DOMAIN}/favorites`, { favorite: { user_id, article_id } }, { withCredentials: true })
       .then((response) => {
@@ -37,9 +32,13 @@ const Item = ({ index, imgLink, altText, price, description, isAdmin, isLogged, 
       })
   }
 
+  const handleClick = (e) => {
+    if (flashActive) cleanFlash();
+  }
+
     return (
       <ArticlePreview>
-        <Link to={{ pathname: `/show/${index}` }}>
+        <Link to={{ pathname: `/show/${index}` }} onPointerDown={handleClick}>
           <LazyLoad
             placeholder={<span>Loading...</span>}
             once
@@ -63,7 +62,8 @@ const mapStateToProps = (state) => ({
   isAdmin: state.currentUser.user.admin,
   isLogged: state.currentUser.logged_in,
   likedItems: state.likedItems,
-  user_id: state.currentUser.user.id
+  user_id: state.currentUser.user.id,
+  flashActive: state.flash.active
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -94,6 +94,13 @@ const mapDispatchToProps = (dispatch) => ({
       type: 'ACTIVATE_FLASH',
       msg,
       nature: 'failure'
+    })
+  },
+  cleanFlash: () => {
+    dispatch({
+      type: 'DEACTIVATE_FLASH',
+      nature: '',
+      msg: ''
     })
   }
 })

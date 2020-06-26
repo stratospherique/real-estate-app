@@ -57,7 +57,7 @@ const AddForm = ({ logged, addItem, history }) => {
 
   return (
     <ArtForm onSubmit={handleSubmit}>
-      <span>Add a real Estate</span>
+      <strong>Add a real Estate</strong>
       { errors.length > 0 ? <ErrorsDisplay action="add a real estate" errors={errors} /> : null }
       <div>
         <input name="description" type="text" placeholder="description" value={formFields.description} onChange={handleFieldChange} />
