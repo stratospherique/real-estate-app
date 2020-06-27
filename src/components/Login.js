@@ -5,7 +5,7 @@ import axios from 'axios';
 import { ArtForm, FormButton, ErrorsDisplay } from '../styled-components/main';
 import DOMAIN from '../_helpers/api-source';
 
-const Login = ({ history, loginSuccess }) => {
+const Login = ({ history, loginSuccess, flashFailure }) => {
   const [errors, setErrors] = useState([])
   const [formFields, setFormFields] = useState({
     username: '',
@@ -25,6 +25,7 @@ const Login = ({ history, loginSuccess }) => {
       })
       .catch((err) => {
         setErrors(err.response.data.errors)
+        flashFailure();
       })
   }
 
@@ -73,6 +74,13 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({
       type: 'GET_LIKED',
       liked: data,
+    })
+  },
+  flashFailure: () => {
+    dispatch({
+      type: 'ACTIVATE_FLASH',
+      msg: `Ooops! Unable to login`,
+      nature: 'failure'
     })
   }
 })

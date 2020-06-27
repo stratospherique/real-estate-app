@@ -40,6 +40,7 @@ class SignUp extends React.Component {
         this.setState({
           errors: errors.response.data.errors,
         })
+        this.props.flashFailure();
       })
   };
 
@@ -85,6 +86,13 @@ const mapDispatchToProps = (dispatch) => ({
       link
     })
   },
+  flashFailure: () => {
+    dispatch({
+      type: 'ACTIVATE_FLASH',
+      msg: `Ooops! Unable to sign up`,
+      nature: 'failure'
+    })
+  }
 })
 
 export default connect(null, mapDispatchToProps)(SignUp);

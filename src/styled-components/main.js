@@ -163,7 +163,7 @@ const ArtDesc = styled.div`
 
 const DelBtn = styled.span`
   position: absolute;
-  top:0;
+  top: 0;
   right: .2rem;
   font-size: 1rem;
   font-weight: 900;

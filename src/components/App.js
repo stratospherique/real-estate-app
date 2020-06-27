@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Home from '../pages/home';
 import NotFound from '../pages/notfound';
 import NavSecion from './Navigation';
@@ -21,7 +20,7 @@ import Favorites from './Favorites';
 import { getItems, getItemsFail } from '../actions/index';
 import DOMAIN from '../_helpers/api-source';
 
-const device = width => {
+const device = (width) => {
   switch (true) {
     case (width < 750):
         return 'mobile'
@@ -58,15 +57,15 @@ const App = (props) => {
     props.getTrending();
     props.loginStatus();
     setLoading(false);
+    if (props.currentUser.logged_in) {
+      props.welcomeUser(props.currentUser.user.username);
+    } else props.welcomeUser('stranger');
   }, [])
 
 
   useEffect(() => {
     setLoading(true);
     if (props.currentUser.logged_in) props.getLikedArts(props.currentUser.user.id);
-    if (props.currentUser.logged_in) {
-      props.welcomeUser(props.currentUser.user.username);
-    } else props.welcomeUser('stranger');
     setTimeout(() => {
       setLoading(false);
     }, 2000)
