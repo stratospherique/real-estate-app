@@ -5,7 +5,7 @@ import axios from 'axios';
 import { ArtForm, FormButton, ErrorsDisplay } from '../styled-components/main';
 import DOMAIN from '../_helpers/api-source';
 
-const Login = ({ history, loginSuccess, flashFailure }) => {
+const Login = ({ history, loginSuccess, flashFailure, cleanFlash }) => {
   const [errors, setErrors] = useState([])
   const [formFields, setFormFields] = useState({
     username: '',
@@ -43,7 +43,7 @@ const Login = ({ history, loginSuccess, flashFailure }) => {
 
   return (
     <ArtForm onSubmit={handleSubmit}>
-      <span>Login</span>
+      <strong>Login</strong>
       { errors.length > 0 ? <ErrorsDisplay action="login" errors={errors} /> : null }
       <div>
         <input type="text" name="username" value={formFields.username} onChange={handleFieldChange} />
@@ -53,7 +53,7 @@ const Login = ({ history, loginSuccess, flashFailure }) => {
       </div>
       <div>
         <FormButton type="submit">Sign in</FormButton>
-        <Link to="/sign-up">Sign Up</Link>
+        <Link to="/sign-up" onPointerDown={() => cleanFlash()}>Sign Up</Link>
       </div>
     </ArtForm>
   );
@@ -80,7 +80,12 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({
       type: 'ACTIVATE_FLASH',
       msg: 'Ooops! Unable to login',
-      nature: 'failure'
+      nature: 'failure',
+    })
+  },
+  cleanFlash: () => {
+    dispatch({
+      type: 'DEACTIVATE_FLASH',
     })
   }
 })

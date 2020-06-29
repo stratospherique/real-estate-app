@@ -5,16 +5,15 @@ import { faSpinner, faHeart } from '@fortawesome/free-solid-svg-icons';
 import missingImage from '../assets/not-available.png';
 
 const Container = styled.div`
-  border: 1px solid;
-  display: block;
-  position: relative;
   width: 100%;
-  min-width: 250px;
+  height: 100%;
+  overflow-y: scroll;
+  display: block;
+  min-width: 270px;
 `;
 
 const MainSection = styled.main`
-  position: absolute;
-  top: 6rem;
+  margin-top: 4rem;
   width: 100%;
   padding: 1rem;
   display: grid;
@@ -23,7 +22,7 @@ const MainSection = styled.main`
   
 
   @media screen and (max-width: 750px){
-    top: 0;
+    margin-top: 3rem;
     margin-bottom: 4rem;
   }
 `;
@@ -209,28 +208,18 @@ const FavBtn = styled(AddFavBtn)`
 `;
 
 const HeaderContainer = styled.header`
-  border: 1px solid #A6A9AC;
-  /*
-  display: grid;
-  grid-template-columns: 1fr 3rem 1fr;
-  grid-template-rows: auto;
-  grid-template-areas: "left-side center-side right-side";
-  */
+  border-bottom: 1px solid #A6A9AC;
   display: flex;
   justfy-content: space-around;
   height: 3.5rem;
   width: 100%;
+  min-width: 270px;
   position: fixed;
   z-index: 100;
 
   @media screen and (max-width: 750px){
     bottom: 0;
   }
-  /*
-  @media screen and (min-width: 751px) {
-    grid-template-columns: 1fr 1fr 5rem;
-    grid-template-areas: "left-side right-side center-side";
-  }*/
   background-color: white;
 
   nav {
@@ -243,13 +232,15 @@ const HeaderContainer = styled.header`
     a {
       text-decoration: none;
       text-transform: capitalize;
-      text-align: center;
-      width: 5.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 6.5rem;
       height: 2.2rem;
       line-height: 1.4rem;
       overflow: hidden;
       border: 1px solid;
-      font-size: 1em;
+      font-size: .9em;
       font-weight: 900;
       padding: .5rem;
       border-radius: 10px 0 10px 0;
@@ -263,7 +254,15 @@ const HeaderContainer = styled.header`
       }
 
       @media screen and (max-width: 400px) {
-        width: 4rem;
+        width: 3rem;
+        font-size: .6em;
+        padding: 0;
+      }
+
+      @media screen and (min-width: 401px) and (max-width: 756px) {
+        width: 5rem;
+        font-size: .6em;
+        padding: 0;
       }
     }
   }
@@ -276,22 +275,25 @@ const HeaderContainer = styled.header`
 
 const AvatarContainer = styled.div`
   position: relative;
-  display:flex;
+  display: flex;
   justify-content: center;
+  align-items: center;
   width: 10%;
   height: 100%;
 
 
   .avatar-pic {
     box-sizing: content-box;
-    vertical-align: middle;
     width: 3rem;
     height: 3rem;
     border: 1px dotted; 
     border-radius: 50%;
-    position: absolute;
-    top: 10%;
     cursor: pointer;
+
+    @media screen and (max-width: 400px) {
+      width: 2rem;
+      height: 2rem;
+    }
   }
 
   .drop-content {
@@ -309,6 +311,9 @@ const AvatarContainer = styled.div`
 
     & span {
       height: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       text-align: center;
       color: rgba(255,50,0,0.4);
 
@@ -329,7 +334,7 @@ const AvatarContainer = styled.div`
   }
 
   .hidden {
-    visibility: hidden;
+    transform: scaleY(0);
   }
 
   .up-content {
@@ -338,7 +343,7 @@ const AvatarContainer = styled.div`
   }
 
   .down-content {
-    bottom: -2.7rem;
+    bottom: -2.6rem;
     flex-direction: column;
   }
 `;
@@ -429,6 +434,12 @@ const ArtForm = styled.form`
       text-align: center;
       color: rgba(140,0,200,0.6);
     }
+  }
+
+  & > strong {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1.5em;
   }
 
   & button {

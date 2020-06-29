@@ -76,8 +76,8 @@ const App = (props) => {
         {isLoading ? <Loading spinnerColor="lightpink" /> :
         <Container>
           <NavSecion />
-          <Flash status={props.flashStatus} type={props.flashType} />
           <MainSection>
+            <Flash status={props.flashStatus} type={props.flashType} />
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/favorites" exact component={Favorites} />

@@ -65,7 +65,7 @@ const Avatar = ({ viewport, image }) => {
 
 const mapStateToProps = ({ viewport }) => ({
   viewport,
-})
+});
 
 
 export default connect(mapStateToProps, null)(Avatar);

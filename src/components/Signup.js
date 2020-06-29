@@ -52,7 +52,7 @@ class SignUp extends React.Component {
   render() {
     return (
       <ArtForm onSubmit={this.handleSubmit}>
-        <span>Login</span>
+        <strong>Join our Network</strong>
         { this.state.errors.length > 0 ? <ErrorsDisplay action="sign up" errors={this.state.errors} /> : null }
         <div>
           <input type="text" placeholder="username" ref={(input) => this.username = input} />
