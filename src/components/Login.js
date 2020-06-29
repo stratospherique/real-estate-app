@@ -79,7 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
   flashFailure: () => {
     dispatch({
       type: 'ACTIVATE_FLASH',
-      msg: `Ooops! Unable to login`,
+      msg: 'Ooops! Unable to login',
       nature: 'failure'
     })
   }

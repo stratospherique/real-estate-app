@@ -250,9 +250,11 @@ const HeaderContainer = styled.header`
       overflow: hidden;
       border: 1px solid;
       font-size: 1em;
+      font-weight: 900;
       padding: .5rem;
-      border-radius: 5px 0 5px 0;
-      color: black;
+      border-radius: 10px 0 10px 0;
+      color: white;
+      background-color: #336d88;
 
       &:hover {
         background-color: rgba(200,0,100,0.4);
@@ -267,6 +269,7 @@ const HeaderContainer = styled.header`
   }
 
   .activeTab {
+    background-color: rgba(200,0,100,0.4);
     color: gray;
   }
 `;

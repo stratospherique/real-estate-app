@@ -15,9 +15,12 @@ const Flash = styled(FlashBasic)`
     justify-content: center;
     align-items: center;
 
+    background-color: ${props => props.type == 'welcome' ? '#CCE5FF;' : props.type == 'success' ? '#D4EDDA;' : '#F8D7DA;'}
+
     strong {
         margin-right: .4rem;
         text-transform: capitalize;
+        font-weight: 900;
         &::after {
             content: '!';
         }

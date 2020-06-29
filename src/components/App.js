@@ -57,13 +57,13 @@ const App = (props) => {
     props.getTrending();
     props.loginStatus();
     setLoading(false);
-    if (props.currentUser.logged_in) {
-      props.welcomeUser(props.currentUser.user.username);
-    } else props.welcomeUser('stranger');
   }, [])
 
 
   useEffect(() => {
+    if (props.currentUser.logged_in) {
+      props.welcomeUser(props.currentUser.user.username);
+    } else props.welcomeUser('stranger');
     setLoading(true);
     if (props.currentUser.logged_in) props.getLikedArts(props.currentUser.user.id);
     setTimeout(() => {
@@ -76,7 +76,7 @@ const App = (props) => {
         {isLoading ? <Loading spinnerColor="lightpink" /> :
         <Container>
           <NavSecion />
-          <Flash status={props.flashStatus} />
+          <Flash status={props.flashStatus} type={props.flashType} />
           <MainSection>
             <Switch>
               <Route path="/" exact component={Home} />
@@ -97,7 +97,8 @@ const App = (props) => {
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
-  flashStatus: state.flash.active
+  flashStatus: state.flash.active,
+  flashType: state.flash.type
 });
 
 const mapDispatchToProps = (dispatch) => ({
