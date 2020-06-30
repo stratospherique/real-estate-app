@@ -209,6 +209,7 @@ const FavBtn = styled(AddFavBtn)`
 
 const HeaderContainer = styled.header`
   border-bottom: 1px solid #A6A9AC;
+  border-top: 1px solid #A6A9AC;
   display: flex;
   justfy-content: space-around;
   height: 3.5rem;

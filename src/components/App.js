@@ -127,6 +127,11 @@ const mapDispatchToProps = (dispatch) => ({
       })
       .catch(() => {
         dispatch(getItemsFail());
+        dispatch({
+          type: 'ACTIVATE_FLASH',
+          msg: `Sorry something went wrong`,
+          nature: 'failure'
+        })
       });
   },
   getTrending: () => {
@@ -135,6 +140,13 @@ const mapDispatchToProps = (dispatch) => ({
       dispatch({
         type: 'GET_TRENDING',
         ids: response.data.trending,
+      })
+    })
+    .catch(() => {
+      dispatch({
+        type: 'ACTIVATE_FLASH',
+        msg: `Sorry something went wrong`,
+        nature: 'failure'
       })
     })
   },

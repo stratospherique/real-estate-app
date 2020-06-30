@@ -24,7 +24,7 @@ const Login = ({ history, loginSuccess, flashFailure, cleanFlash }) => {
           redirect();
       })
       .catch((err) => {
-        setErrors(err.response.data.errors)
+        if (err.response) setErrors(err.response.data.errors)
         flashFailure();
       })
   }

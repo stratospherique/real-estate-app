@@ -4,6 +4,7 @@ import FlashBasic from '../components/FlashBasic';
 
 const Flash = styled(FlashBasic)`
     border: 1px solid;
+    border-radius: .7rem;
     height: 2rem;
     width: 100%;
     padding: .5rem;

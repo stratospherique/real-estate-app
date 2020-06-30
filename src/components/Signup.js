@@ -36,10 +36,11 @@ class SignUp extends React.Component {
           this.redirect();
       })
       .catch((errors) => {
-        console.log(errors)
-        this.setState({
-          errors: errors.response.data.errors,
-        })
+        if (errors.response) {
+          this.setState({
+            errors: errors.response.data.errors,
+          })
+        }
         this.props.flashFailure();
       })
   };
