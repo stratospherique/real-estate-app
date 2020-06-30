@@ -5,7 +5,7 @@ import axios from 'axios';
 import { ArtForm, FormButton, ErrorsDisplay } from '../styled-components/main';
 import DOMAIN from '../_helpers/api-source';
 
-const Login = ({ history, loginSuccess, flashFailure, cleanFlash }) => {
+const Login = ({ history, loginSuccess, flashFailure, cleanFlash, isLogged }) => {
   const [errors, setErrors] = useState([])
   const [formFields, setFormFields] = useState({
     username: '',
@@ -40,6 +40,8 @@ const Login = ({ history, loginSuccess, flashFailure, cleanFlash }) => {
       return { ...tmp }
     })
   }
+
+  if (isLogged) redirect();
 
   return (
     <ArtForm onSubmit={handleSubmit}>
@@ -90,5 +92,9 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
+const mapStateToProps = (state) => ({
+  isLogged: state.currentUser.logged_in
+})
 
-export default connect(null, mapDispatchToProps)(Login);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

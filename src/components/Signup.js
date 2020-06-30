@@ -10,6 +10,10 @@ class SignUp extends React.Component {
     errors: []
   }
 
+  componentWillMount() {
+    if (this.props.isLogged) this.redirect()
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -96,4 +100,8 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-export default connect(null, mapDispatchToProps)(SignUp);
+const mapStateToProps = (state) => ({
+  isLogged: state.currentUser.logged_in
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
