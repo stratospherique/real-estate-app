@@ -49,7 +49,7 @@ const Item = ({ index, imgLink, altText, price, description, isAdmin, isLogged, 
           <ArtPrice className="art-price"><span>Price:</span><span> $ {price}</span></ArtPrice>
           <ArtDesc className="art-desc"><span>Description:</span><span>{description}</span></ArtDesc>
         </Link>
-        {isLogged && deletable ? <DelBtn onClick={() => handleRemove(index)} className="del-button"><FontAwesomeIcon icon={faTrashAlt} /></DelBtn> : null}
+        {isLogged && (isAdmin || deletable) ? <DelBtn onClick={() => handleRemove(index)} className="del-button"><FontAwesomeIcon icon={faTrashAlt} /></DelBtn> : null}
         {isLogged ? (
           likedItems.includes(index) ? <FavBtn liked /> : <FavBtn triggerLike={handleLike} />
         ) : null}
