@@ -5,7 +5,7 @@ import { ArtForm, FormButton, ErrorsDisplay } from '../styled-components/main';
 import DOMAIN from '../_helpers/api-source';
 
 
-const AddForm = ({ logged, addItem, history, flashFailure }) => {
+const AddForm = ({ logged, addItem, history, flashFailure, flashSuccess }) => {
   const [errors, setErrors] = useState([]);
   const [formFields, setFormFields] = useState({
     description: '',
@@ -31,6 +31,7 @@ const AddForm = ({ logged, addItem, history, flashFailure }) => {
     axios.post(`${DOMAIN}/articles`, { article: formFields }, { withCredentials: true })
     .then((response) => {
       addItem(response.data.article);
+      flashSuccess();
       redirect(response.data.article.id);
     })
     .catch((errors) => {
@@ -103,6 +104,13 @@ const mapDispatchToProps = (dispatch) => ({
       type: 'ACTIVATE_FLASH',
       msg: 'Ooops! Unable to Add a real estate',
       nature: 'failure'
+    })
+  },
+  flashSuccess: () => {
+    dispatch({
+      type: 'ACTIVATE_FLASH',
+      msg: 'Real estate added successfully',
+      nature: 'success'
     })
   }
 })
