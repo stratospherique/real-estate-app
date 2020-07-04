@@ -9,7 +9,8 @@ const Flash = styled(FlashBasic)`
     width: 100%;
     padding: .5rem;
     display: flex;
-    ${props => props.status ? null : 'display: none;'}
+    transition: transform .5s ease-out;
+    ${props => props.status ? 'transform: scaleY(1);' : 'transform: scaleY(0);'}
     justify-content: center;
     align-items: center;
     margin-bottom: 1rem;
@@ -32,10 +33,6 @@ const Flash = styled(FlashBasic)`
 
     @media screen and (min-width: 1024px) {
         width: 30rem;
-    }
-
-    @media screen and (max-width: 750px) {
-        
     }
 `;
 

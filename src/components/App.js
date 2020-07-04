@@ -54,7 +54,6 @@ const App = (props) => {
   useEffect(() => {
     props.getViewPort(target);
     props.getItems();
-    props.getTrending();
     props.loginStatus();
     setLoading(false);
   }, [])
@@ -109,7 +108,6 @@ const mapDispatchToProps = (dispatch) => ({
           user: response.data.user,
           link: response.data.link,
         })
-        console.log(response.data.logged_in)
     })
     .catch((err) => {
       dispatch({
@@ -133,22 +131,6 @@ const mapDispatchToProps = (dispatch) => ({
           nature: 'failure'
         })
       });
-  },
-  getTrending: () => {
-    axios.get(`${DOMAIN}/articles/trending`)
-    .then((response) => {
-      dispatch({
-        type: 'GET_TRENDING',
-        ids: response.data.trending,
-      })
-    })
-    .catch(() => {
-      dispatch({
-        type: 'ACTIVATE_FLASH',
-        msg: `Sorry something went wrong`,
-        nature: 'failure'
-      })
-    })
   },
   getLikedArts: (userId) => {
     axios.get(`${DOMAIN}/user/${userId}/favorites`, { withCredentials: true })

@@ -54,6 +54,7 @@ const Avatar = ({ viewport, image }) => {
       onPointerLeave={handleResume}
       onPointerEnter={handleDrop}
       onClick={handleClick}
+      orientation={dropState.open ? dropState.direction : null}
     >
       <img src={image} className="avatar-pic" alt="Avatar" />
       {dropState.open ? (
