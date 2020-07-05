@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { ArtForm, FormButton } from '../styled-components/main';
+import { ArtForm, FormButton, ErrorsDisplay } from '../styled-components/main';
 import DOMAIN from '../_helpers/api-source';
 
 
@@ -10,29 +10,42 @@ class SignUp extends React.Component {
     errors: []
   }
 
+  componentWillMount() {
+    if (this.props.isLogged) this.redirect()
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
+
     const newUser = {
       username: this.username.value,
       email: this.email.value,
       password: this.pwd.value,
       password_confirmation: this.pwdC.value,
     }
-    axios.post(`${DOMAIN}/users`, { user: newUser }, { withCredentials: true })
+
+    if (this.fileInput.files[0]) {
+      newUser['avatar'] = this.fileInput.files[0]
+    }
+
+    const formData = new FormData();
+
+    Object.entries(newUser).forEach(
+      ([key, value]) => formData.append(key, value)
+    )
+
+    axios.post(`${DOMAIN}/users`, formData, { withCredentials: true })
       .then((response) => {
-        if (response.data.user) {
-          this.props.signUpSuccess(response.data.user)
+          this.props.signUpSuccess(response.data.user, response.data.link)
           this.redirect();
-        } else {
-          this.setState({
-            errors: response.data.errors,
-          })
-        }
       })
       .catch((errors) => {
-        this.setState({
-          errors: ['API Errors'],
-        })
+        if (errors.response) {
+          this.setState({
+            errors: errors.response.data.errors,
+          })
+        }
+        this.props.flashFailure();
       })
   };
 
@@ -42,15 +55,10 @@ class SignUp extends React.Component {
 
 
   render() {
-    const errorsDisplay = this.state.errors && this.state.errors.length > 0 ? (
-      <ul>
-        {this.state.errors.map((error) => <li key={error}>{error}</li>)}
-      </ul>
-    ) : null;
     return (
       <ArtForm onSubmit={this.handleSubmit}>
-        <span>Login</span>
-        {errorsDisplay}
+        <strong>Join our Network</strong>
+        { this.state.errors && this.state.errors.length > 0 ? <ErrorsDisplay action="sign up" errors={this.state.errors} /> : null }
         <div>
           <input type="text" placeholder="username" ref={(input) => this.username = input} />
         </div>
@@ -63,6 +71,9 @@ class SignUp extends React.Component {
         <div>
           <input type="password" placeholder="Password confirmation" ref={(input) => this.pwdC = input} />
         </div>
+        <div>
+          <input type="file" name="avatar" accept="image/*" ref={(input) => this.fileInput = input} />
+        </div>
         <FormButton type="submit">Sign UP</FormButton>
       </ArtForm>
     );
@@ -73,12 +84,24 @@ const mapDispatchToProps = (dispatch) => ({
   signUpStart: () => {
     console.log('hey');
   },
-  signUpSuccess: (user) => {
+  signUpSuccess: (user, link) => {
     dispatch({
       type: 'LOGGED_IN',
-      user
+      user,
+      link
     })
   },
+  flashFailure: () => {
+    dispatch({
+      type: 'ACTIVATE_FLASH',
+      msg: 'Ooops! Unable to sign up',
+      nature: 'failure'
+    })
+  }
 })
 
-export default connect(null, mapDispatchToProps)(SignUp);
+const mapStateToProps = (state) => ({
+  isLogged: state.currentUser.logged_in
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

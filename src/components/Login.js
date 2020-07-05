@@ -1,79 +1,101 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { ArtForm, FormButton } from '../styled-components/main';
+import { ArtForm, FormButton, ErrorsDisplay } from '../styled-components/main';
 import DOMAIN from '../_helpers/api-source';
 
-class Login extends React.Component {
-  state = {
-    errors: {}
+const Login = ({ history, loginSuccess, flashFailure, cleanFlash, isLogged }) => {
+  const [errors, setErrors] = useState([])
+  const [formFields, setFormFields] = useState({
+    username: '',
+    password: '',
+  })
+
+  const redirect = () => {
+    history.push('/');
   }
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const newUser = {
-      username: this.username.value,
-      password: this.password.value,
-    }
-    axios.post(`${DOMAIN}/login`, { user: newUser }, { withCredentials: true })
+    axios.post(`${DOMAIN}/login`, { user: formFields }, { withCredentials: true })
       .then((response) => {
-        if (response.data.logged_in) {
-          this.props.loginSuccess(response.data.user)
-          this.redirect();
-        } else {
-          this.setState({
-            errors: response.data.errors,
-          })
-        }
+          loginSuccess(response.data.user, response.data.link)
+          redirect();
       })
       .catch((err) => {
-        this.setState({
-          errors: ['API errors'],
-        })
+        console.log(err)
+        if (err.response) setErrors(err.response.data.errors)
+        flashFailure();
       })
   }
 
-  redirect = () => {
-    this.props.history.push('/');
+
+  const handleFieldChange = (e) => {
+    let { name, value } = e.target
+    setFormFields((prevState) => {
+      const tmp = { ...prevState }
+      if (Array.isArray(tmp[`${name}`])) {
+        tmp[`${name}`].push(value);
+      } else tmp[`${name}`] = value;
+      return { ...tmp }
+    })
   }
 
-  render() {
-    const errorsDisplay = this.state.errors.length > 0 ? (
-      <ul>
-        {this.state.errors.map((error) => <li key={error}>{error}</li>)}
-      </ul>
-    ) : null;
-    return (
-      <ArtForm onSubmit={this.handleSubmit}>
-        <span>Login</span>
-        {errorsDisplay}
-        <div>
-          <input type="text" id="username" ref={(input) => this.username = input} />
-        </div>
-        <div>
-          <input type="password" id="password" ref={(input) => this.password = input} />
-        </div>
-        <div>
-          <FormButton type="submit">Sign in</FormButton>
-          <Link to="/sign-up">Sign Up</Link>
-        </div>
-      </ArtForm>
-    );
-  }
+  if (isLogged) redirect();
+
+  return (
+    <ArtForm onSubmit={handleSubmit}>
+      <strong>Login</strong>
+      { errors.length > 0 ? <ErrorsDisplay action="login" errors={errors} /> : null }
+      <div>
+        <input type="text" name="username" value={formFields.username} onChange={handleFieldChange} />
+      </div>
+      <div>
+        <input type="password" name="password" value={formFields.password} onChange={handleFieldChange} />
+      </div>
+      <div>
+        <FormButton type="submit">Sign in</FormButton>
+        <Link to="/sign-up" onPointerDown={() => cleanFlash()}>Sign Up</Link>
+      </div>
+    </ArtForm>
+  );
 }
 
 const mapDispatchToProps = (dispatch) => ({
   loginStart: () => {
     console.log('login started!');
   },
-  loginSuccess: (user) => {
+  loginSuccess: (user, link) => {
     dispatch({
       type: 'LOGGED_IN',
-      user
+      user,
+      link
+    })
+  },
+  getLikedArts: (data) => {
+    dispatch({
+      type: 'GET_LIKED',
+      liked: data,
+    })
+  },
+  flashFailure: () => {
+    dispatch({
+      type: 'ACTIVATE_FLASH',
+      msg: 'Ooops! Unable to login',
+      nature: 'failure',
+    })
+  },
+  cleanFlash: () => {
+    dispatch({
+      type: 'DEACTIVATE_FLASH',
     })
   }
 })
 
+const mapStateToProps = (state) => ({
+  isLogged: state.currentUser.logged_in
+})
 
-export default connect(null, mapDispatchToProps)(Login);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

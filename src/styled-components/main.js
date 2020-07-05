@@ -1,16 +1,19 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner, faHeart } from '@fortawesome/free-solid-svg-icons';
+import missingImage from '../assets/not-available.png';
 
 const Container = styled.div`
-  border: 1px solid;
-  display: block;
-  position: relative;
   width: 100%;
-  min-width: 250px;
+  height: 100%;
+  overflow-y: scroll;
+  display: block;
+  min-width: 270px;
 `;
 
 const MainSection = styled.main`
-  position: absolute;
-  top: 6rem;
+  margin-top: 4rem;
   width: 100%;
   padding: 1rem;
   display: grid;
@@ -19,7 +22,7 @@ const MainSection = styled.main`
   
 
   @media screen and (max-width: 750px){
-    top: 0;
+    margin-top: 3rem;
     margin-bottom: 4rem;
   }
 `;
@@ -61,19 +64,73 @@ const ArticlePreview = styled.div`
   }
 `;
 
-const PreviewIMG = styled.img`
+const PreviewComponent = ({ source, className, altText, children }) => {
+
+  const [isLoading, setIsLoading] = useState(true)
+
+  const [hasError, setHasError] = useState(false);
+
+  return (
+    <>
+      {children}
+      { isLoading && !hasError ? <Loading bgColor="white" size="small" spinnerColor="white" /> : null}
+      { !hasError ? <img src={source} className={className} alttext={altText} onError={() => setHasError(true)} 
+      onLoad={() => setIsLoading(false)} /> : null}
+      { hasError ? <img src={missingImage} className={className} alttext="image unavailable" /> : null }
+    </>
+  )
+}
+
+const PreviewIMG = styled(PreviewComponent)`
   width: 100%;
   max-width: 250px;
   max-height: 150px;
   height: 70%;
   border-radius: 10px 10px 0px 0px;
   transition: .5s opacity ease-out;
+  positon: relative;
 
   &:hover{
     opacity: .6;
     background-color: gray;
   }
-`
+`;
+
+const LoadingDiv = ({ className, children }) => (
+  <div className={className}>
+    <div>
+      <FontAwesomeIcon icon={faSpinner} spin />
+    </div>
+    {children}
+  </div>
+)
+
+const Loading = styled(LoadingDiv)`
+  width: 100%;
+  height: 100%;
+  ${props => props.bgColor ? `background-color: ${props.bgColor};` : 'background-color: rgb(100,100,100);'}
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-content: center;
+  z-index: ${({size}) => size && size == 'small' ? '20;' : '1000;'}
+
+  & > div {
+    width: ${({size}) => size && size == 'small' ? '2rem;' : '5rem;'}
+    height: ${({size}) => size && size == 'small' ? '2rem;' : '5rem;'}
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    ${props => props.squareColor ? `background-color: ${props.squareColor};` : 'background-color: rgb(10,50,0);'};
+    border-radius: 1rem;
+
+    svg {
+      ${props => props.spinnerColor ? `color: ${props.spinnerColor};` : 'color: pink;'};
+      font-size: ${({size}) => size && size == 'small' ? '1rem;' : '2rem;'}
+    }
+  }
+`;
 
 const ArtPrice = styled.div`
   padding-left: .3rem;
@@ -105,7 +162,7 @@ const ArtDesc = styled.div`
 
 const DelBtn = styled.span`
   position: absolute;
-  top:0;
+  top: 0;
   right: .2rem;
   font-size: 1rem;
   font-weight: 900;
@@ -123,7 +180,14 @@ const DelBtn = styled.span`
   }
 `;
 
-const FavBtn = styled.span`
+const AddFavBtn = ({className, children, triggerLike}) => (
+  <div className={className} onClick={triggerLike}>
+    <FontAwesomeIcon icon={faHeart} />
+    {children}
+  </div>
+)
+
+const FavBtn = styled(AddFavBtn)`
   position: absolute;
   top: 60%;
   right: 0;
@@ -136,31 +200,31 @@ const FavBtn = styled.span`
   cursor: pointer;
   color: #82858F;
   font-weight: bold;
+
+  & > svg {
+    transition: color .5s ease;
+    color: ${({liked}) => liked ? 'red;' : 'gray;'}
+  }
 `;
 
 const HeaderContainer = styled.header`
-  border: 1px solid #A6A9AC;
-  display: grid;
-  grid-template-columns: 1fr 3rem 1fr;
-  grid-template-rows: auto;
-  grid-template-areas: "left-side center-side right-side";
+  border-bottom: 1px solid #A6A9AC;
+  border-top: 1px solid #A6A9AC;
+  display: flex;
+  justfy-content: space-around;
   height: 3.5rem;
   width: 100%;
+  min-width: 270px;
   position: fixed;
   z-index: 100;
 
   @media screen and (max-width: 750px){
     bottom: 0;
   }
-
-  @media screen and (min-width: 751px) {
-    grid-template-columns: 1fr 1fr 5rem;
-    grid-template-areas: "left-side right-side center-side";
-  }
   background-color: white;
 
   nav {
-    width: 100%;
+    width: ${({rightStart}) => rightStart ? '45%' : '90%'};
     height: 100%;
     display: flex;
     justify-content: space-around;
@@ -169,16 +233,20 @@ const HeaderContainer = styled.header`
     a {
       text-decoration: none;
       text-transform: capitalize;
-      text-align: center;
-      width: 5.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 6.5rem;
       height: 2.2rem;
       line-height: 1.4rem;
       overflow: hidden;
       border: 1px solid;
-      font-size: 1em;
+      font-size: .9em;
+      font-weight: 900;
       padding: .5rem;
-      border-radius: 5px 0 5px 0;
-      color: black;
+      border-radius: 10px 0 10px 0;
+      color: white;
+      background-color: #336d88;
 
       &:hover {
         background-color: rgba(200,0,100,0.4);
@@ -187,56 +255,64 @@ const HeaderContainer = styled.header`
       }
 
       @media screen and (max-width: 400px) {
-        width: 4rem;
+        width: 3rem;
+        font-size: .6em;
+        padding: 0;
+      }
+
+      @media screen and (min-width: 401px) and (max-width: 756px) {
+        width: 5rem;
+        font-size: .6em;
+        padding: 0;
       }
     }
   }
 
   .activeTab {
+    background-color: rgba(200,0,100,0.4);
     color: gray;
   }
-
-  .nav-left {
-      grid-area: left-side;
-      
-    }
-
-  .nav-right {
-      grid-area: right-side;
-  }
-  
 `;
 
 const AvatarContainer = styled.div`
-  grid-area: center-side;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
   height: 100%;
 
+
   .avatar-pic {
-    vertical-align: middle;
+    box-sizing: content-box;
     width: 3rem;
     height: 3rem;
+    border: 1px dotted; 
     border-radius: 50%;
-    position: absolute;
-    top: 10%;
     cursor: pointer;
+
+    @media screen and (max-width: 400px) {
+      width: 2rem;
+      height: 2rem;
+    }
   }
 
   .drop-content {
     width: 4rem;
     height: 2.5rem;
     position: absolute;
-    left: -10%;
+    left: calc(50% - 2rem);
     display: flex;
-    flex-direction: column;
     align-items: stretch;
     z-index: 100;
     background-color: white;
-
     box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.2);
 
     & span {
       height: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       text-align: center;
       color: rgba(255,50,0,0.4);
 
@@ -257,7 +333,7 @@ const AvatarContainer = styled.div`
   }
 
   .hidden {
-    visibility: hidden;
+    transform: scaleY(0);
   }
 
   .up-content {
@@ -266,7 +342,7 @@ const AvatarContainer = styled.div`
   }
 
   .down-content {
-    bottom: -2.7rem;
+    bottom: -2.6rem;
     flex-direction: column;
   }
 `;
@@ -341,6 +417,7 @@ const ArtForm = styled.form`
   border-radius: 1rem;
   border: 1px solid #CBCCCD;
   padding: 1.5rem;
+  width: 22rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -358,19 +435,44 @@ const ArtForm = styled.form`
     }
   }
 
-  & ul {
-    padding: .5rem;
-    background-color: rgba(140,0,0,0.2);
-    border-radius: .6rem;
-    
-    & li {
-      list-style: circle;
-      margin-left: 8%;
-    }
+  & > strong {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1.5em;
   }
 
   & button {
     margin-top: 10px;
+  }
+  @media screen and (max-width: 750px) {
+    width: 100%;
+  }
+`;
+
+const ErrorsDisplayBasic = ({className, children, errors, action}) => (
+  <div className={className}>
+    {children}
+      <span>Unable to {action} due to the following errors:</span>
+      <ul>
+        {errors.map((item) => <li key={item}>{item}</li>)}
+      </ul>
+  </div>
+);
+
+const ErrorsDisplay = styled(ErrorsDisplayBasic)`
+  width: 100%;
+  padding: .5rem;
+  background-color: rgba(140,0,0,0.2);
+  border-radius: .6rem;
+
+  & > span {
+    display: inline-block;
+    margin-bottom: .5rem;
+  }
+
+  & li {
+    list-style: circle;
+    margin-left: 8%;
   }
 `;
 
@@ -418,5 +520,5 @@ const AboutContainer = styled.div`
 `;
 
 export {
-  ArticlePreview, Container, HeaderContainer, MainSection, TheListings, AvatarContainer, ArticleViewContainer, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn, ArtForm, FormButton, SectionHeading, AboutContainer
+  ArticlePreview, Container, HeaderContainer, MainSection, TheListings, AvatarContainer, ArticleViewContainer, PreviewIMG, ArtPrice, ArtDesc, DelBtn, FavBtn, ArtForm, FormButton, SectionHeading, AboutContainer, Loading, ErrorsDisplay
 };

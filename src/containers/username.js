@@ -29,7 +29,7 @@ class UserName extends Component {
         ) : (
             <div className={`drop-content ${cls}`}>
               <span>Visitor</span>
-              <Link to="/login">login</Link>
+              <Link to="/login" onPointerDown={() => this.props.cleanFlash()}>login</Link>
             </div>
           )}
       </>
@@ -52,6 +52,11 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({
         type: 'CLEAR_LIKED',
       });
+    },
+    cleanFlash: () => {
+      dispatch({
+        type: 'DEACTIVATE_FLASH',
+      })
     }
   }
 }

@@ -1,100 +1,94 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { ArtForm, FormButton } from '../styled-components/main';
+import { ArtForm, FormButton, ErrorsDisplay } from '../styled-components/main';
 import DOMAIN from '../_helpers/api-source';
 
-class AddForm extends React.Component {
-  state = {
-    errors: [],
+
+const AddForm = ({ logged, addItem, history, flashFailure, flashSuccess }) => {
+  const [errors, setErrors] = useState([]);
+  const [formFields, setFormFields] = useState({
+    description: '',
+    price: undefined,
+    preview: [],
+    buildingType: '',
+    propertyType: '',
+    city: '',
+    footage: undefined,
+    rating: undefined,
+  })
+
+  const unRedirect = () => {
+    history.push('/404')
   }
 
-  componentDidMount() {
-    return this.props.isAdmin ? null : this.unRedirect();
+  const redirect = (id) => {
+    history.push(`/show/${id}`);
   }
 
-  unRedirect = () => {
-    this.props.history.push('/404')
-  }
-
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const newArt = {
-      description: this.desc.value,
-      price: this.price.value,
-      preview: [this.url.value],
-      buildingType: this.bType.value,
-      propertyType: this.pType.value,
-      city: this.city.value,
-      footage: this.foot.value,
-      rating: this.rat.value,
+    axios.post(`${DOMAIN}/articles`, { article: formFields }, { withCredentials: true })
+    .then((response) => {
+      addItem(response.data.article);
+      flashSuccess();
+      redirect(response.data.article.id);
+    })
+    .catch((errors) => {
+      setErrors([...errors.response.data.message])
+      flashFailure();
+      })
     }
 
-    axios.post(`${DOMAIN}/articles`, { article: newArt })
-      .then((response) => {
-        if (response.data.article) {
-          this.props.addItem(response.data.article);
-          this.redirect(response.data.article.id);
-        } else {
-          this.setState({
-            errors: response.data.message
-          })
-        }
-      })
-      .catch((errors) => {
-        this.setState({
-          errors: ['Opsie daisy API errors :(']
-        })
-      })
+  const handleFieldChange = (e) => {
+    let { name, value } = e.target
+    setFormFields((prevState) => {
+      const tmp = { ...prevState }
+      if (Array.isArray(tmp[`${name}`])) {
+        tmp[`${name}`].push(value);
+      } else tmp[`${name}`] = value;
+      return { ...tmp }
+    })
   }
 
-  redirect(id) {
-    this.props.history.push(`/show/${id}`);
-  }
+  if (!logged) unRedirect();
 
-  render() {
-    const errorsDisplay = this.state.errors.length > 0 ?
-      <ul><span>Unable To add due to the following errors:</span>
-        {this.state.errors.map((item) => <li key={item}>{item}</li>)}
-      </ul>
-      : null;
-    return (
-      <ArtForm onSubmit={this.handleSubmit}>
-        <span>Add a real Estate</span>
-        {errorsDisplay}
-        <div>
-          <input type="text" placeholder="description" ref={(input) => this.desc = input} />
-        </div>
-        <div>
-          <input type="number" placeholder="price in $" ref={(input) => this.price = input} />
-        </div>
-        <div>
-          <input type="text" placeholder="Valid Real Image url" ref={(input) => this.url = input} />
-        </div>
-        <div>
-          <input type="text" placeholder="Building type" ref={(input) => this.bType = input} />
-        </div>
-        <div>
-          <input type="text" placeholder="property type" ref={(input) => this.pType = input} />
-        </div>
-        <div>
-          <input type="text" placeholder="city" ref={(input) => this.city = input} />
-        </div>
-        <div>
-          <input type="number" placeholder="Footage" ref={(input) => this.foot = input} />
-        </div>
-        <div>
-          <input type="number" min="0" max="5" placeholder="Your Honest Rating" ref={(input) => this.rat = input} />
-        </div>
-        <FormButton type="submit">add real estate</FormButton>
-      </ArtForm>
-    )
-  }
+  return (
+    <ArtForm onSubmit={handleSubmit}>
+      <strong>Add a real Estate</strong>
+      { errors.length > 0 ? <ErrorsDisplay action="add a real estate" errors={errors} /> : null }
+      <div>
+        <input name="description" type="text" placeholder="description" value={formFields.description} onChange={handleFieldChange} />
+      </div>
+      <div>
+        <input name="price" type="number" placeholder="price in $" value={formFields.price} onChange={handleFieldChange} />
+      </div>
+      <div>
+        <input name="preview" type="text" placeholder="Valid Real Image url" value={formFields.preview} onChange={handleFieldChange} />
+      </div>
+      <div>
+        <input name="buildingType" type="text" placeholder="Building type" value={formFields.buildingType} onChange={handleFieldChange} />
+      </div>
+      <div>
+        <input name="propertyType" type="text" placeholder="property type" value={formFields.propertyType} onChange={handleFieldChange} />
+      </div>
+      <div>
+        <input name="city" type="text" placeholder="city" value={formFields.city} onChange={handleFieldChange} />
+      </div>
+      <div>
+        <input name="footage" type="number" placeholder="Footage" value={formFields.footage} onChange={handleFieldChange} />
+      </div>
+      <div>
+        <input name="rating" type="number" min="0" max="5" placeholder="Your Honest Rating" value={formFields.rating} onChange={handleFieldChange} />
+      </div>
+      <FormButton type="submit">add real estate</FormButton>
+    </ArtForm>
+  )
 }
 
 const mapStateToProps = (state) => {
   return {
-    isAdmin: state.currentUser.user.admin
+    logged: state.currentUser.logged_in
   }
 }
 
@@ -103,6 +97,20 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({
       type: 'ADD_ITEM',
       article
+    })
+  },
+  flashFailure: () => {
+    dispatch({
+      type: 'ACTIVATE_FLASH',
+      msg: 'Ooops! Unable to Add a real estate',
+      nature: 'failure'
+    })
+  },
+  flashSuccess: () => {
+    dispatch({
+      type: 'ACTIVATE_FLASH',
+      msg: 'Real estate added successfully',
+      nature: 'success'
     })
   }
 })

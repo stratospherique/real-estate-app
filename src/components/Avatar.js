@@ -1,54 +1,72 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import UserName from '../containers/username';
 import { AvatarContainer } from '../styled-components/main';
 
-class Avatar extends React.Component {
-  state = {
+const figureDirection = (label) => {
+  switch (label) {
+    case 'mobile':
+      return 'up'
+    default:
+      return 'down'
+  }
+}
+
+const Avatar = ({ viewport, image }) => {
+  const [dropState, setDropState] = useState({
     open: false,
-    width: window.innerWidth,
-    direction: window.width > 750 ? 'down' : 'up',
-  }
+    direction: figureDirection(viewport),
+  });
 
-  componentDidMount() {
-    this.handleResize();
-    window.addEventListener('resize', this.handleResize);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
-  }
-
-  handleResize = () => {
-    this.setState({
-      width: window.innerWidth,
-      direction: window.innerWidth > 750 ? 'down' : 'up',
+  useEffect(() => {
+    setDropState({
+      ...dropState,
+      direction: figureDirection(viewport),
     })
-  }
+  }, [viewport])
 
-  handleDrop = () => {
-    this.setState({
+  const handleDrop = () => {
+    if (viewport !== 'web') return;
+    setDropState({
+      ...dropState,
       open: true,
     })
   }
 
-  handleResume = () => {
-    this.setState({
+  const handleResume = () => {
+    if (viewport !== 'web') return;
+    setDropState({
+      ...dropState,
       open: false,
     })
   }
 
-  render() {
-    const dropMenu = this.state.open ? (
-      <UserName cls={this.state.direction === 'up' ? 'up-content' : 'down-content'} />
-    ) : <UserName cls="hidden" />
-    return (
-      <AvatarContainer onPointerLeave={this.handleResume} onPointerEnter={this.handleDrop}>
-        <img src="https://www.w3schools.com/howto/img_avatar2.png" className="avatar-pic" alt="Avatar" />
-        {dropMenu}
-      </AvatarContainer>
-    );
+  const handleClick = () => {
+    if (viewport === 'web') return;
+    setDropState({
+      ...dropState,
+      open: !dropState.open
+    })
   }
+
+  return (
+    <AvatarContainer
+      onPointerLeave={handleResume}
+      onPointerEnter={handleDrop}
+      onClick={handleClick}
+      orientation={dropState.open ? dropState.direction : null}
+    >
+      <img src={image} className="avatar-pic" alt="Avatar" />
+      {dropState.open ? (
+    <UserName cls={dropState.direction === 'up' ? 'up-content' : 'down-content'} />
+  ) : <UserName cls="hidden" />}
+    </AvatarContainer>
+  );
 }
 
+const mapStateToProps = ({ viewport }) => ({
+  viewport,
+});
 
-export default Avatar;
+
+export default connect(mapStateToProps, null)(Avatar);
